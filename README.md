@@ -9,7 +9,7 @@ Crear una aplicacion que en el caso Hibrido gestionara los clientes, grupos , mo
 La base de datos sera el firebase y se usara en ambas aplicaciones. Un cliente no puede borrar monitores, ni grupos pero si puede quitarse de un grupo. En cambio el administrador del gimnasio si puede borrar los grupos, subcripciones, monitores y maquinas.
 
 ## Modelo Relacional
-()[]
+()[!https://drive.google.com/file/d/1eG7NFQKbKK497GwGSbLkR8WeHlwjl3FI/view?usp=sharing]
 
 
 
