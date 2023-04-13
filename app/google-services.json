@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "300246921754",
+    "project_id": "fitness-gym-80s",
+    "storage_bucket": "fitness-gym-80s.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300246921754:android:102981a9c7cbeca46a57a3",
+        "android_client_info": {
+          "package_name": "com.fitness.fitnessgym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300246921754-qcohuf7fu2cp4krdt9jahjqgn29n4t81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFkafqm4MQ_bOuHkO2yAcfinMkcmmm1aI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300246921754-qcohuf7fu2cp4krdt9jahjqgn29n4t81.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
