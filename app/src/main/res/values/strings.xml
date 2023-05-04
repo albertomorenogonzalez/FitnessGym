@@ -5,4 +5,25 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="logo">logo</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="birthdate_picker_btn_description">calendar icon</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="dni">DNI</string>
+    <string name="profile_pick">profilePick</string>
+    <string name="register_text">Register a New Employee</string>
+    <string name="edit_photo_icon">editPhotoIcon</string>
+    <string name="cancel">Cancel</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="scroll_down">Scroll Down to see the full form</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="select_image">Select Image</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="enable_permission">You need to enable de permission</string>
+    <string name="password_exception_1">The password has to be at least 6 characters long</string>
+    <string name="password_exception_2">The passwords don`t match</string>
+    <string name="fields_exception">Some fields are empty</string>
+    <string name="login_exception">Email or password is wrong</string>
 </resources>

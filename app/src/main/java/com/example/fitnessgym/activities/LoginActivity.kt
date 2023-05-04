@@ -1,10 +1,11 @@
-package com.example.fitnessgym
+package com.example.fitnessgym.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -46,23 +47,22 @@ class LoginActivity : AppCompatActivity() {
         with(binding) {
 
             val email = txtEmail.text.toString().trim()
-            val pass = txtPw.text.toString().trim()
+            val pw = txtPw.text.toString().trim()
 
-            if (email.isNotEmpty() || email.isNotBlank() && pass.isNotEmpty() || pass.isNotBlank())
-            {
+            if (email.isNotEmpty() || email.isNotBlank() && pw.isNotEmpty() || pw.isNotBlank()) {
                 Firebase.auth
-                    .signInWithEmailAndPassword(email, pass)
+                    .signInWithEmailAndPassword(email, pw)
                     .addOnSuccessListener {
 
                         val i = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(i)
                     }
                     .addOnFailureListener {
-                        Snackbar.make(root, "error", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(root, R.string.login_exception, Snackbar.LENGTH_LONG).show()
                     }
 
             } else {
-                Snackbar.make(root, "empty", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(root, R.string.fields_exception, Snackbar.LENGTH_LONG).show()
             }
         }
     }

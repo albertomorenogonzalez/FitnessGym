@@ -5,59 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
-    tools:context="com.example.fitnessgym.LoginActivity">
+    tools:context="com.example.fitnessgym.activities.LoginActivity">
 
     <TextView
         android:id="@+id/backSquare"
-        android:layout_width="335dp"
-        android:layout_height="519dp"
+        android:layout_width="340dp"
+        android:layout_height="450dp"
         android:layout_marginStart="38dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="38dp"
-        android:layout_marginBottom="62dp"
-        android:alpha=".4"
-        android:background="@color/red"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/transparent_red"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="100dp"
-        android:contentDescription="@string/logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fitness_gym_logo" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userEmail"
-        android:layout_width="292dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="25dp"
-        android:hint="@string/email"
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="116dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/backSquare"
-        app:layout_constraintTop_toTopOf="@+id/backSquare">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:textColorHint="#616161" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userPw"
-        android:layout_width="292dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="25dp"
+        android:layout_width="293dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="@+id/backSquare"
         app:layout_constraintTop_toBottomOf="@+id/userEmail">
@@ -65,10 +45,29 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPw"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="49dp"
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColorHint="#616161" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userEmail"
+        android:layout_width="293dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/email"
+        app:layout_constraintEnd_toEndOf="@+id/backSquare"
+        app:layout_constraintTop_toBottomOf="@+id/logo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,23 +75,24 @@
         android:id="@+id/loginBtn"
         android:layout_width="118dp"
         android:layout_height="48dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="25dp"
-        android:textColor="@color/white"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/gray"
         android:text="@string/log_in"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/backSquare"
         app:layout_constraintTop_toBottomOf="@+id/userPw" />
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="116dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="25dp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/gray"
-        android:text="@string/register"
-        app:layout_constraintEnd_toEndOf="@+id/backSquare"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="191dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="160dp"
+        android:contentDescription="@string/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fitness_gym_logo"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
