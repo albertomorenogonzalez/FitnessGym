@@ -24,7 +24,7 @@ Para la asignatura de diseño de interfaces crearemos un informe a partir de eso
 ## [Trello](https://trello.com/b/bwXyty7u/fitnessgym)
 Este proyecto utiliza Trello para la gestión de las tareas a realizar
 
-## [Anteproyecto](https://www.figma.com/file/kvU6qBh4NmjaGoooBiBPvJ/Anteproyecto-Fitness-Gym?node-id=0%3A1&t=e7FTqe0I8Yq6Mbhf-1)
+## [Anteproyecto en Figma](https://www.figma.com/file/kvU6qBh4NmjaGoooBiBPvJ/Anteproyecto-Fitness-Gym?node-id=0%3A1&t=e7FTqe0I8Yq6Mbhf-1)
 
 ## Histórico del Proyecto (por commits principales)
 
