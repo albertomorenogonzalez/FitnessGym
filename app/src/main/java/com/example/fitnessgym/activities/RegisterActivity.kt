@@ -128,6 +128,12 @@ class RegisterActivity : AppCompatActivity() {
 
             }
 
+
+            cancelBtn.setOnClickListener {
+                finish()
+                return@setOnClickListener
+            }
+
         }
 
 
@@ -142,7 +148,7 @@ class RegisterActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun onDateSelected(day: Int, month:Int, year:Int) {
-        binding.birthdate.setText(String.format("%02d/%02d/%04d", day, month, year))
+        binding.birthdate.setText(String.format("%02d/%02d/%04d", day, month + 1, year))
     }
 
     private fun chooseGalleryOrPhoto() {
