@@ -26,6 +26,8 @@ Este proyecto utiliza Trello para la gestión de las tareas a realizar
 
 ## [Anteproyecto en Figma](https://www.figma.com/file/kvU6qBh4NmjaGoooBiBPvJ/Anteproyecto-Fitness-Gym?node-id=0%3A1&t=e7FTqe0I8Yq6Mbhf-1)
 
+## [Vídeo Checkout 05/05/2023](https://www.youtube.com/watch?v=go-7G-VvBFE)
+
 ## Histórico del Proyecto (por commits principales)
 
  - [First Commit of the Project. Functional log in added - 13/04/2023](https://github.com/albertomorenogonzalez/FitnessGym/commit/78507842a6f12c3de6e2473f1c60cdfd34f60752)
