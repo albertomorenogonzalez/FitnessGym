@@ -26,4 +26,12 @@
     <string name="password_exception_2">The passwords don`t match</string>
     <string name="fields_exception">Some fields are empty</string>
     <string name="login_exception">Email or password is wrong</string>
+    <string name="home">Home</string>
+    <string name="groups">Groups</string>
+    <string name="customers">Customers</string>
+    <string name="instructors">Instructors</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="welcome">Welcome to</string>
+    <string name="log_out">Log out</string>
 </resources>
