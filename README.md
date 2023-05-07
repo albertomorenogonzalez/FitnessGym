@@ -39,6 +39,6 @@ Este proyecto utiliza Trello para la gestión de las tareas a realizar
  
  Añadido register maquetado y funcional, aunque solo se utilizan para el registro en firebase el email y la contraseña. Añadidos archivos de recursos multimedia y correciones menores.
  
- - [Navigation added. Side Menu and Fragment Views](https://github.com/albertomorenogonzalez/FitnessGym/commit/5cdb7d0a8dac8e8595a36adf9c47b6c910ca6474)
+ - [Navigation added. Side Menu and Fragment Views - 07/05/2023](https://github.com/albertomorenogonzalez/FitnessGym/commit/5cdb7d0a8dac8e8595a36adf9c47b6c910ca6474)
     
  Añadida la navegación de la aplicación una vez realizado el log in. Esta navegación es posible gracias a un side menu.
