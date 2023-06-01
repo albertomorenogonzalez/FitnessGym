@@ -5,16 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.fitnessgym.fragments.CustomersFragment
-import com.example.fitnessgym.fragments.GroupsFragment
-import com.example.fitnessgym.fragments.HomeFragment
-import com.example.fitnessgym.fragments.InstructorsFragment
+import com.example.fitnessgym.fragments.*
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityMainBinding
 import com.google.android.material.chip.Chip
@@ -85,6 +81,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            R.id.nav_profile -> {
+                val intent =  Intent(this@MainActivity, ProfileActivity::class.java)
+                answer.launch(intent)
+            }
             R.id.nav_home -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, HomeFragment()).commit()
@@ -108,6 +108,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .replace(R.id.container, InstructorsFragment()).commit()
 
                 supportActionBar?.setTitle(R.string.instructors)
+            }
+            R.id.nav_about -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, AboutFragment()).commit()
+
+                supportActionBar?.setTitle(R.string.about)
             }
             else -> {}
         }
