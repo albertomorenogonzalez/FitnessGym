@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import com.example.fitnessgym.activities.MainActivity
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
@@ -33,12 +35,23 @@ class HomeFragment : Fragment() {
         with (binding) {
             customerButton.setOnClickListener {
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.container, CustomersFragment())?.commit()
+                    ?.replace(R.id.container, CustomersFragment())
+                    ?.addToBackStack(null)
+                    ?.commit()
+            }
 
-
+            groupsButton.setOnClickListener {
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.container, GroupsFragment())
+                    ?.addToBackStack(null)
+                    ?.commit()
             }
         }
-
     }
 
+    companion object {
+        @JvmStatic
+        fun newInstance() = HomeFragment()
+
+    }
 }

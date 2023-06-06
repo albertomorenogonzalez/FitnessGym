@@ -40,10 +40,12 @@
         android:layout_marginEnd="20dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="@+id/backSquare"
-        app:layout_constraintTop_toBottomOf="@+id/userEmail">
+        app:layout_constraintTop_toBottomOf="@+id/userEmail"
+        app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPw"
+            android:text="Aaaaaaa1"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:inputType="textPassword"
@@ -64,6 +66,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEmail"
+            android:text="albertomorenogonzalez95@gmail.com"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"

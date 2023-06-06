@@ -228,7 +228,8 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="12dp"
-                android:hint="@string/password">
+                android:hint="@string/password"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPw"
@@ -248,7 +249,8 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="12dp"
-                android:hint="@string/repeat_password">
+                android:hint="@string/repeat_password"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPwRepeat"
@@ -259,6 +261,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <ImageView
+                android:id="@+id/logo_base"
+                android:layout_width="201dp"
+                android:layout_height="113dp"
+                android:layout_marginStart="104dp"
+                android:layout_marginTop="100dp"
+                android:contentDescription="@string/logo"
+                app:srcCompat="@drawable/fitness_gym_logo"
+                app:tint="@color/white" />
 
         </LinearLayout>
 

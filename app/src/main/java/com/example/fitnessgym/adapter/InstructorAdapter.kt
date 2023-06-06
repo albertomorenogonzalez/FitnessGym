@@ -13,10 +13,10 @@ class InstructorAdapter(var instructors: MutableList<Instructor>): RecyclerView.
     inner class InstructorsContainer(val layout: InstructorLayoutBinding): RecyclerView.ViewHolder(layout.root) {
         fun bindInstructor(instructor: Instructor) {
          with (layout) {
-            Glide.with(root).load(instructor.insPhoto).into(profilePick)
-            name.text = instructor.insName
-            surname.text = instructor.insSur
-            email.text = instructor.insEmail
+            Glide.with(root).load(instructor.photo).into(profilePick)
+            name.text = instructor.first_name
+            surname.text = instructor.last_name
+            email.text = instructor.email
          }
         }
     }

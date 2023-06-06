@@ -1,13 +1,18 @@
 package com.example.fitnessgym.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.fitnessgym.functions.Dialogs
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -21,6 +26,13 @@ class LoginActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
 
         supportActionBar?.hide()
 
@@ -38,6 +50,14 @@ class LoginActivity : AppCompatActivity() {
                 answer.launch(i)
             }
         }
+
+        onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isTaskRoot) {
+                    Dialogs.showExitDialog(this@LoginActivity)
+                }
+            }
+        })
     }
 
     /**
@@ -45,7 +65,6 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun login() {
         with(binding) {
-
             val email = txtEmail.text.toString().trim()
             val pw = txtPw.text.toString().trim()
 
@@ -56,6 +75,7 @@ class LoginActivity : AppCompatActivity() {
 
                         val i = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(i)
+                        finish()
                     }
                     .addOnFailureListener {
                         Snackbar.make(root, R.string.login_exception, Snackbar.LENGTH_LONG).show()
@@ -72,7 +92,15 @@ class LoginActivity : AppCompatActivity() {
      */
     private fun verify(data: ActivityResult) {
         when (data.resultCode) {
-            RESULT_OK       -> Snackbar.make(binding.root, "ok", Snackbar.LENGTH_LONG).show()
+            RESULT_OK       -> {
+                val email = data.data?.getStringExtra("email")
+                val pw = data.data?.getStringExtra("pw")
+
+                with (binding) {
+                    txtEmail.setText(email)
+                    txtPw.setText(pw)
+                }
+            }
             RESULT_CANCELED -> {}
             else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()
         }
