@@ -100,6 +100,9 @@ class LoginActivity : AppCompatActivity() {
                     txtEmail.setText(email)
                     txtPw.setText(pw)
                 }
+
+                Firebase.auth.signOut()
+
             }
             RESULT_CANCELED -> {}
             else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()

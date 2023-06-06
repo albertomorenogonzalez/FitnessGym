@@ -180,7 +180,7 @@ class RegisterActivity : AppCompatActivity() {
                                 Snackbar.make(root, R.string.password_exception_1, Snackbar.LENGTH_LONG).show()
                             }
 
-                        Firebase.auth.signOut()
+
                         val i = Intent()
                         val extras = Bundle().apply {
                             putString("email", email)

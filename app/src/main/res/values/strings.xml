@@ -45,4 +45,10 @@
     <string name="close_application_message">Are you sure you want to close the app ?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="user_s_profile_pick">User\'s Profile Pick</string>
+    <string name="name_hint">First_Name Last_Name</string>
+    <string name="delete_user">Delete User</string>
+    <string name="edit_user_button">Edit User Button</string>
+    <string name="delete_user_message">Are you sure you want to delete your user ? (this action can not be undone)</string>
 </resources>

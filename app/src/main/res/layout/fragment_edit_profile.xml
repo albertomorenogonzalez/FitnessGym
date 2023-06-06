@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fitnessgym.fragments.ProfileFragment">
+    android:background="@color/white"
+    tools:context="com.example.fitnessgym.fragments.EditProfileFragment">
 
     <ImageButton
         android:id="@+id/config_button"
@@ -17,45 +18,68 @@
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/go_to_settings" />
 
-    <ImageView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profile_profile_pick"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="105dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="106dp"
-        android:contentDescription="@string/user_s_profile_pick"
-        android:src="@drawable/fitness_gym_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
+        <ImageView
+            android:id="@+id/profilePick"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/profile_pick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/fitness_gym_logo" />
+
+        <ImageButton
+            android:id="@+id/editPhotoIcon"
+            android:layout_width="58dp"
+            android:layout_height="59dp"
+            android:background="?attr/colorSecondary"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="@string/edit_photo_icon"
+            android:src="@drawable/image_edit_outline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="?attr/colorSecondary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/profile_name"
-        android:layout_width="254dp"
-        android:layout_height="37dp"
+        android:layout_width="290dp"
+        android:layout_height="70dp"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="5dp"
-        android:fontFamily="@font/bebas_neue_regular"
-        android:text="@string/name_hint"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_user_button"
+        android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_profile_pick" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_profile_pick">
 
-    <ImageButton
-        android:id="@+id/edit_user_button"
-        android:layout_width="41dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="292dp"
-        android:layout_marginEnd="56dp"
-        android:background="@color/transparent"
-        android:contentDescription="@string/edit_user_button"
-        android:src="@drawable/ic_baseline_edit_note_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:fontFamily="@font/bebas_neue_regular"
+            android:inputType="text"
+            android:text="@string/name_hint"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            android:textSize="30sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/profile_birthdate"
@@ -152,18 +176,6 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_phone" />
-
-    <Button
-        android:id="@+id/delete_user_button"
-        android:layout_width="349dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="31dp"
-        android:text="@string/delete_user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_dni" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
