@@ -24,8 +24,11 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
+import kotlin.properties.Delegates.observable
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,14 +78,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val username : TextView = headerView.findViewById(R.id.user_name)
 
         if (currentUser != null) {
-            db.collection("usuarios").document(currentUser.uid).get().addOnSuccessListener {
-                username.text = it.get("first_name").toString()
-
-                if (it.get("photo") != "") {
-                    Glide.with(binding.root).load(it.get("photo")).into(profilePick)
+            val userDocRef = db.collection("usuarios").document(currentUser.uid)
+            var userName: String by observable("") { _, _, newUserName ->
+                username.text = newUserName
+            }
+            var photoUrl: String by observable("") { _, _, newPhotoUrl ->
+                val firebasePhotoStart = "https://firebasestorage.googleapis.com/v0/b/fitness-gym-80s.appspot.com/o/fitnessgym-images"
+                if (firebasePhotoStart in newPhotoUrl) {
+                    Glide.with(binding.root).load(newPhotoUrl).into(profilePick)
+                } else {
+                    profilePick.setImageResource(R.drawable.fitness_gym_logo)
                 }
 
             }
+
+            userDocRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    val newUserName = snapshot.getString("first_name") ?: ""
+                    val newPhotoUrl = snapshot.getString("photo") ?: ""
+
+                    userName = newUserName
+                    photoUrl = newPhotoUrl
+                }
+            }
+
         }
 
         profilePick.setOnClickListener {

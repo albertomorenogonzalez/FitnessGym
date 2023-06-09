@@ -8,8 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.activities.ConfigActivity
+import com.example.fitnessgym.activities.EditProfileActivity
 import com.example.fitnessgym.activities.LoginActivity
 import com.example.fitnessgym.activities.MainActivity
 import com.fitness.fitnessgym.R
@@ -19,7 +23,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.ktx.Firebase
+import kotlin.properties.Delegates
+import kotlin.properties.Delegates.observable
 
 class ProfileFragment : Fragment() {
 
@@ -27,6 +37,7 @@ class ProfileFragment : Fragment() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
+    private val answer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { verify(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,17 +66,56 @@ class ProfileFragment : Fragment() {
 
         with (binding) {
             if (uid != null) {
-                db.collection("usuarios").document(uid).get().addOnSuccessListener {
-                    if (!it.get("photo")?.equals("")!!) {
-                        Glide.with(binding.root.context).load(it.get("photo")).into(binding.profileProfilePick)
+                val userDocRef = db.collection("usuarios").document(uid)
+                var userCompleteName: String by observable("") { _, _, newUserCompleteName ->
+                    profileName.text = newUserCompleteName
+                }
+                var userBirthdate: String by observable("") { _, _, newUserBirthdate ->
+                    userBirthdate.text = newUserBirthdate
+                }
+                var userEmail: String by observable("") { _, _, newUserEmail ->
+                    userEmail.text = newUserEmail
+                }
+                var userPhone: String by observable("") { _, _, newUserPhone ->
+                    userPhone.text = newUserPhone
+                }
+                var userDni: String by observable("") { _, _, newUserDni ->
+                    userDni.text = newUserDni
+                }
+                var photoUrl: String by observable("") { _, _, newPhotoUrl ->
+                    val firebasePhotoStart =
+                        "https://firebasestorage.googleapis.com/v0/b/fitness-gym-80s.appspot.com/o/fitnessgym-images"
+                    if (firebasePhotoStart in newPhotoUrl) {
+                        Glide.with(binding.root).load(newPhotoUrl).into(profileProfilePick)
+                    } else {
+                        profileProfilePick.setImageResource(R.drawable.fitness_gym_logo)
                     }
 
-                    profileName.text = "${it.get("first_name")} ${it.get("last_name")}"
-                    userBirthdate.text = it.get("birthdate").toString()
-                    userEmail.text = it.get("email").toString()
-                    userPhone.text = it.get("phone").toString()
-                    userDni.text = it.get("dni").toString()
                 }
+
+                userDocRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
+                    if (error != null) {
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        val newUserFirstName = snapshot.getString("first_name") ?: ""
+                        val newUserLastName = snapshot.getString("last_name") ?: ""
+                        val newUserBirthdate = snapshot.getString("birthdate") ?: ""
+                        val newUserEmail = snapshot.getString("email") ?: ""
+                        val newUserPhone = snapshot.getString("phone") ?: ""
+                        val newUserDni = snapshot.getString("dni") ?: ""
+                        val newPhotoUrl = snapshot.getString("photo") ?: ""
+
+                        userCompleteName = "$newUserFirstName $newUserLastName"
+                        userBirthdate = newUserBirthdate
+                        userEmail = newUserEmail
+                        userPhone = newUserPhone
+                        userDni = newUserDni
+                        photoUrl = newPhotoUrl
+                    }
+                }
+
             }
 
             deleteUserButton.setOnClickListener {
@@ -86,7 +136,7 @@ class ProfileFragment : Fragment() {
                                 startActivity(Intent(context, LoginActivity::class.java))
                                 return@addOnSuccessListener
                             }?.addOnFailureListener {
-                                Snackbar.make(root, "Algo falló", Snackbar.LENGTH_LONG).show()
+                                Snackbar.make(root, "Something went wrong", Snackbar.LENGTH_LONG).show()
                             }
 
 
@@ -101,13 +151,22 @@ class ProfileFragment : Fragment() {
             }
 
 
-
             editUserButton.setOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.container, EditProfileFragment())
-                    ?.addToBackStack(null)
-                    ?.commit()
+                answer.launch(Intent(context, EditProfileActivity::class.java))
             }
+        }
+    }
+
+    /**
+     * @param data: ActivityResult
+     */
+    private fun verify(data: ActivityResult) {
+        when (data.resultCode) {
+            AppCompatActivity.RESULT_OK -> {
+                Snackbar.make(binding.root, R.string.user_succesfully_edited, Snackbar.LENGTH_LONG).show()
+            }
+            AppCompatActivity.RESULT_CANCELED -> {}
+            else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()
         }
     }
 

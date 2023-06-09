@@ -16,26 +16,26 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.MediaStore.ACTION_PICK_IMAGES
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Instructor
-import com.example.fitnessgym.fragments.DatePickerFragment
+import com.example.fitnessgym.functions.Dates
 import com.example.fitnessgym.services.InstructorService
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityRegisterBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.util.FileUtil
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -44,6 +44,7 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -59,30 +60,32 @@ class RegisterActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     private val db = FirebaseFirestore.getInstance()
 
-    @SuppressLint("Range")
+
     private val launchGallery = registerForActivityResult(StartActivityForResult()) {
+            result ->
 
-        result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data?.data
+        val data = result.data?.data
 
-                if (data != null) {
-                    imageUri = data
-                }
+        if (data != null) {
+            imageUri = data
+        }
 
-                Glide.with(binding.root.context).load(data).into(binding.profilePick)
-            }
+        Glide.with(binding.root.context).load(data).into(binding.profilePick)
 
     }
 
     private val launchCamera = registerForActivityResult(StartActivityForResult()) {
-        result ->
+            result ->
 
-            val bitmap = result.data?.extras?.get("data") as Bitmap
+        val bitmap = result.data?.extras?.get("data") as Bitmap?
 
+        if (bitmap != null) {
             saveImage(bitmap)
 
             Glide.with(binding.root.context).load(bitmap).into(binding.profilePick)
+
+        }
+
     }
 
 
@@ -92,7 +95,6 @@ class RegisterActivity : AppCompatActivity() {
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val an = TranslateAnimation(1600.0f, 0.0f, 0.0f, 0.0f);
         an.duration = 1000;
@@ -121,9 +123,8 @@ class RegisterActivity : AppCompatActivity() {
         timer.start()
 
 
-
         with (binding) {
-            btnBirthDate.setOnClickListener { showDatePickerDialog() }
+            btnBirthDate.setOnClickListener { Dates.showDatePickerDialog(supportFragmentManager, birthdate) }
             profilePick.setOnClickListener { chooseGalleryOrPhoto() }
             editPhotoIcon.setOnClickListener { chooseGalleryOrPhoto() }
 
@@ -158,7 +159,7 @@ class RegisterActivity : AppCompatActivity() {
                                                 val photoUrl = downloadUri.toString()
                                                 if (uid != null && token != null) {
                                                     val ins = Instructor(uid, name, surname, birthdate, email, telephoneNumber, dni, photoUrl)
-                                                    InstructorService.registerInstructor(db, ins, token)
+                                                    InstructorService.registerOrEditInstructor(db, ins, token)
                                                 }
                                             }.addOnFailureListener { exception ->
                                                 Log.e("Firebase Storage", "Error al obtener la URL de descarga", exception)
@@ -169,7 +170,7 @@ class RegisterActivity : AppCompatActivity() {
                                     } else {
                                         if (uid != null && token != null) {
                                             val ins = Instructor(uid, name, surname, birthdate, email, telephoneNumber, dni)
-                                            InstructorService.registerInstructor(db, ins, token)
+                                            InstructorService.registerOrEditInstructor(db, ins, token)
                                         }
                                     }
                                 }?.addOnFailureListener { exception ->
@@ -210,16 +211,6 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
-
-        datePicker.show(supportFragmentManager, "datePicker")
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun onDateSelected(day: Int, month:Int, year:Int) {
-        binding.birthdate.setText(String.format("%02d/%02d/%04d", day, month + 1, year))
-    }
 
     private fun chooseGalleryOrPhoto() {
         val builder = AlertDialog.Builder(this)
@@ -245,17 +236,30 @@ class RegisterActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun requestPermissionForGallery() {
-        when {
-            ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_EXTERNAL_STORAGE
 
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                pickPhotoFromGallery()
+    private fun requestPermissionForGallery() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_MEDIA_IMAGES
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    pickPhotoFromGallery()
+                }
+                else -> requestPermissionGalleryLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
             }
-            else -> requestPermissionGalleryLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        } else {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    pickPhotoFromGallery()
+                }
+                else -> requestPermissionGalleryLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
         }
     }
+
+
 
     private fun requestPermissionForPhoto() {
         when {
@@ -268,22 +272,24 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+
     private val requestPermissionGalleryLauncher = registerForActivityResult(
         RequestPermission()
-    ) {
-            isGranted ->
+    ) { isGranted ->
 
         if (isGranted) {
             pickPhotoFromGallery()
         } else {
             Toast.makeText(this, R.string.enable_permission, Toast.LENGTH_SHORT).show()
         }
+
     }
+
 
     private val requestPermissionPhotoLauncher = registerForActivityResult(
         RequestPermission()
     ) {
-            isGranted ->
+        isGranted ->
 
         if (isGranted) {
             pickPhoto()
@@ -292,11 +298,14 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+
     private fun pickPhotoFromGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpg", "image/jpeg"))
         launchGallery.launch(intent)
     }
+
 
     private fun pickPhoto() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -340,8 +349,6 @@ class RegisterActivity : AppCompatActivity() {
 
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 
-        /*Mensaje después de esto (?)*/
-
         outputStream.flush()
         outputStream.close()
 
@@ -350,6 +357,5 @@ class RegisterActivity : AppCompatActivity() {
         }
 
     }
-
-
 }
+

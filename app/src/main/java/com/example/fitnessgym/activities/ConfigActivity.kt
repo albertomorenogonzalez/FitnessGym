@@ -14,5 +14,7 @@ class ConfigActivity : AppCompatActivity() {
 
         binding = ActivityConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.setTitle(R.string.settings)
     }
 }
