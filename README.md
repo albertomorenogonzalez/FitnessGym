@@ -50,3 +50,9 @@ Este proyecto utiliza Trello para la gestión de las tareas a realizar
 Ahora la navegación dentro de la aplicación es más fluida, el título en la action bar cambia correctamente tanto si vas hacia otro fragmento como si vuelves después de haber estado en otro. Tanto en la Login Activity como en la MainActivity en el caso de que se encuentre en el fragmento inicial al salir de la aplicación pulsando el back button aparecerá un diálogo que te preguntará si quieres seguir o no en la aplicación.
 Ahora al registrar un usuario todos los campos necesarios para que pueda ser registrado son guardados en una colección de firebase. Una vez realizado el registro se volverá a la LoginActivity con el email y la contraseña del usuario recién registrado en los campos de entrada para que este solo tenga que darle a iniciar sesión. En la cabecera del menú lateral se mostrará su foto de perfil si tiene y su nombre. 
 Problemas: Al subir una foto proveniente directamente de la galería ocurre un error aún por solucionar. Con las fotos hechas con la camara esto no sucede
+
+
+- [Profile Functionality Completed - 09/06/2023](https://github.com/albertomorenogonzalez/FitnessGym/commit/73e9001bcd111568fbf6e8b45cd7b0c6e653b4b3)
+
+Al entrar en el ProfileFragment se pueden ver todos los datos del usuario activo, y se puede tanto eliminar el usuario como editar los datos. 
+El problema con las imágenes de galería en la RegisterActivity aún no está solucionado, pero en EditProfileActivity no hay ningún problema.
