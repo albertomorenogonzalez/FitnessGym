@@ -1,7 +1,9 @@
 # FitnessGym
 
-![](http://drive.google.com/uc?export=view&id=1U_3kmoIH0hH12VUwncm5gtksl0WUlnuu)
-
+<p align="center">
+ <img src="http://drive.google.com/uc?export=view&id=1U_3kmoIH0hH12VUwncm5gtksl0WUlnuu">
+</p>
+ 
 Desarrollado por Jose Antonio Benitez (Hibrido) y Alberto Moreno (Nativo)
 
 ## Objetivo del Proyecto
