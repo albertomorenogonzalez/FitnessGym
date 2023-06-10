@@ -6,17 +6,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Instructor
+import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.InstructorLayoutBinding
 
 class InstructorAdapter(var instructors: MutableList<Instructor>): RecyclerView.Adapter<InstructorAdapter.InstructorsContainer>() {
 
-    inner class InstructorsContainer(val layout: InstructorLayoutBinding): RecyclerView.ViewHolder(layout.root) {
+    inner class InstructorsContainer(private val layout: InstructorLayoutBinding): RecyclerView.ViewHolder(layout.root) {
+        @SuppressLint("SetTextI18n")
         fun bindInstructor(instructor: Instructor) {
          with (layout) {
-            Glide.with(root).load(instructor.photo).into(profilePick)
-            name.text = instructor.first_name
-            surname.text = instructor.last_name
-            email.text = instructor.email
+             if (instructor.photo != "") {
+                 Glide.with(root).load(instructor.photo).into(profilePick)
+             } else {
+                 profilePick.setImageResource(R.drawable.fitness_gym_logo)
+             }
+
+             name.text = "${instructor.first_name} ${instructor.last_name}"
+             email.text = instructor.email
          }
         }
     }
