@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -17,6 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitnessGym"
         tools:targetApi="31">
+        <activity
+            android:name="com.example.fitnessgym.activities.AddEditCustomerActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name="com.example.fitnessgym.activities.EditProfileActivity"
             android:exported="false">

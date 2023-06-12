@@ -1,14 +1,48 @@
 package com.example.fitnessgym.adapter
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Customer
+import com.example.fitnessgym.functions.Dates
+import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.CustomerLayoutBinding
 
-class CustomerAdapter(var customers: MutableList<Customer>): RecyclerView.Adapter<CustomerAdapter.CustomerContainer>() {
+class CustomerAdapter(var customers: MutableList<Customer>,
+                      val customerLongClick: (MenuItem, Customer) -> Boolean): RecyclerView.Adapter<CustomerAdapter.CustomerContainer>() {
     inner class CustomerContainer(private val layout: CustomerLayoutBinding): RecyclerView.ViewHolder(layout.root) {
+        @SuppressLint("SetTextI18n")
         fun bindCustomer(customer: Customer) {
+            with (layout) {
+                if (customer.photo != "") {
+                    Glide.with(root).load(customer.photo).into(profilePick)
+                } else {
+                    profilePick.setImageResource(R.drawable.fitness_gym_logo)
+                }
+
+                name.text = "${customer.name} ${customer.surname}"
+                email.text = customer.email
+                inscriptionDate.text = Dates.showProperDate(customer.inscription)
+
+                root.setOnLongClickListener {
+                    val menu = PopupMenu(root.context, name)
+
+                    menu.inflate(R.menu.customer_options)
+
+                    menu.setOnMenuItemClickListener {
+                        customerLongClick(it, customer)
+                    }
+
+                    menu.show()
+
+                    true
+                }
+            }
 
         }
     }

@@ -56,7 +56,22 @@
     <string name="last_name">Last Name</string>
     <string name="phone_num">Phone Num</string>
     <string name="edit_user">Edit User</string>
-    <string name="user_succesfully_edited">User succesfully edited</string>
+    <string name="user_successfully_edited">User successfully edited</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
+    <string name="inscription_date_title">Inscription Date:</string>
+    <string name="inscription_date">Inscription Date</string>
+    <string name="customer_profile_pick">Customer Profile Pick</string>
+    <string name="group_name">Group Name</string>
+    <string name="instructor">Instructor</string>
+    <string name="instructor_title">Instructor:</string>
+    <string name="fab_content_desc">FAB button</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="add_customer">Add Customer</string>
+    <string name="customer_successfully_added">Customer Successfully Added</string>
+    <string name="edit_customer">Edit Customer</string>
+    <string name="add_customer_to_group">Add Customer to a Group</string>
+    <string name="customer_in_group">Customer is already in a group</string>
+    <string name="delete_customer">Delete Customer</string>
+    <string name="view_customer">View Customer</string>
 </resources>

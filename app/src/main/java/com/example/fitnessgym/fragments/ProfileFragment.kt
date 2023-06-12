@@ -163,7 +163,7 @@ class ProfileFragment : Fragment() {
     private fun verify(data: ActivityResult) {
         when (data.resultCode) {
             AppCompatActivity.RESULT_OK -> {
-                Snackbar.make(binding.root, R.string.user_succesfully_edited, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, R.string.user_successfully_edited, Snackbar.LENGTH_LONG).show()
             }
             AppCompatActivity.RESULT_CANCELED -> {}
             else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()

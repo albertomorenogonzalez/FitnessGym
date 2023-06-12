@@ -16,12 +16,6 @@ class InstructorsFragment : Fragment() {
     private lateinit var adapter: InstructorAdapter
     private val db = FirebaseFirestore.getInstance()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,18 +23,27 @@ class InstructorsFragment : Fragment() {
     ): View? {
         binding = FragmentInstructorsBinding.inflate(inflater, container, false)
 
-
         val userList: MutableList<Instructor> by observable(mutableListOf()) { _, _, _ ->
             adapter.notifyDataSetChanged()
         }
 
-
         val usersCollectionRef = db.collection("usuarios")
 
-        usersCollectionRef.get()
-            .addOnSuccessListener { documents ->
-                userList.clear()
-                for (document in documents) {
+        adapter = InstructorAdapter(userList)
+
+        binding.instructorsView.adapter = adapter
+        binding.instructorsView.setHasFixedSize(true)
+
+        usersCollectionRef.addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                // Handle error
+                return@addSnapshotListener
+            }
+
+            userList.clear()
+
+            if (snapshot != null) {
+                for (document in snapshot.documents) {
                     val uid = document.get("uid").toString()
                     val firstName = document.get("first_name").toString()
                     val lastName = document.get("last_name").toString()
@@ -54,26 +57,20 @@ class InstructorsFragment : Fragment() {
 
                     userList.add(user)
                 }
-
-                adapter = InstructorAdapter(userList)
-
-                binding.instructorsView.adapter = adapter
-                binding.instructorsView.setHasFixedSize(true)
             }
+
+            adapter.notifyDataSetChanged()
+        }
 
         return binding.root
     }
 
-
     override fun onResume() {
         super.onResume()
-
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = InstructorsFragment()
-
     }
-
 }
