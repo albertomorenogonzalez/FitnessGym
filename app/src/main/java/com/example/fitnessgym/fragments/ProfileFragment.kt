@@ -3,11 +3,8 @@ package com.example.fitnessgym.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -15,20 +12,14 @@ import com.bumptech.glide.Glide
 import com.example.fitnessgym.activities.ConfigActivity
 import com.example.fitnessgym.activities.EditProfileActivity
 import com.example.fitnessgym.activities.LoginActivity
-import com.example.fitnessgym.activities.MainActivity
 import com.fitness.fitnessgym.R
-import com.fitness.fitnessgym.databinding.FragmentInstructorsBinding
 import com.fitness.fitnessgym.databinding.FragmentProfileBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.ktx.Firebase
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
 class ProfileFragment : Fragment() {
@@ -41,21 +32,36 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val view = binding.root
 
-        val configButton: ImageView? = view.findViewById(R.id.config_button)
-
-        configButton?.setOnClickListener {
-            val intent = Intent(activity, ConfigActivity::class.java)
-            startActivity(intent)
-        }
-
-        return view
+        return binding.root
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.settings_menu, menu)
+        true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings_button -> {
+                val intent = Intent(activity, ConfigActivity::class.java)
+                startActivity(intent)
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+
 
 
     @SuppressLint("SetTextI18n")

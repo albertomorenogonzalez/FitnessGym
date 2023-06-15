@@ -11,11 +11,18 @@ import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Customer
 import com.example.fitnessgym.functions.Dates
 import com.fitness.fitnessgym.R
+import com.fitness.fitnessgym.databinding.CustomerAssignedLayoutBinding
 import com.fitness.fitnessgym.databinding.CustomerLayoutBinding
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import kotlin.properties.Delegates
+import kotlin.properties.Delegates.observable
 
-class CustomerAdapter(var customers: MutableList<Customer>,
-                      val customerLongClick: (MenuItem, Customer) -> Boolean): RecyclerView.Adapter<CustomerAdapter.CustomerContainer>() {
-    inner class CustomerContainer(private val layout: CustomerLayoutBinding): RecyclerView.ViewHolder(layout.root) {
+class CustomerAssignedAdapter(var customers: MutableList<Customer>,
+                      val deleteFromGroupButton: (String) -> Unit): RecyclerView.Adapter<CustomerAssignedAdapter.CustomerAssignedContainer>() {
+
+    inner class CustomerAssignedContainer(private val layout: CustomerAssignedLayoutBinding): RecyclerView.ViewHolder(layout.root) {
         @SuppressLint("SetTextI18n")
         fun bindCustomer(customer: Customer) {
             with (layout) {
@@ -26,35 +33,23 @@ class CustomerAdapter(var customers: MutableList<Customer>,
                 }
 
                 name.text = "${customer.name} ${customer.surname}"
-                email.text = customer.email
-                inscriptionDate.text = Dates.showProperDate(customer.inscription)
 
-                root.setOnLongClickListener {
-                    val menu = PopupMenu(root.context, name)
-
-                    menu.inflate(R.menu.customer_options)
-
-                    menu.setOnMenuItemClickListener {
-                        customerLongClick(it, customer)
-                    }
-
-                    menu.show()
-
-                    true
+                deleteFromGroupButton.setOnClickListener {
+                    deleteFromGroupButton(customer.docId)
                 }
             }
 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomerContainer {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomerAssignedContainer {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = CustomerLayoutBinding.inflate(inflater)
+        val binding = CustomerAssignedLayoutBinding.inflate(inflater)
 
-        return CustomerContainer(binding)
+        return CustomerAssignedContainer(binding)
     }
 
-    override fun onBindViewHolder(holder: CustomerContainer, position: Int) {
+    override fun onBindViewHolder(holder: CustomerAssignedContainer, position: Int) {
         holder.bindCustomer((customers[position]))
     }
 

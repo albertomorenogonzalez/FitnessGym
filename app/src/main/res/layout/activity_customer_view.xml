@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.fitnessgym.activities.CustomerViewActivity">
+
+    <ImageView
+        android:id="@+id/customer_customer_pick"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="106dp"
+        android:contentDescription="@string/user_s_profile_pick"
+        android:src="@drawable/fitness_gym_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/customer_name"
+        android:layout_width="278dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/name_hint"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_customer_pick" />
+
+    <ImageButton
+        android:id="@+id/edit_customer_button"
+        android:layout_width="45dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="@string/edit_customer_button"
+        android:src="@drawable/ic_baseline_edit_note_24"
+        app:layout_constraintEnd_toStartOf="@+id/delete_customer_button_edg"
+        app:layout_constraintStart_toEndOf="@+id/customer_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/delete_customer_button_edg"
+        android:layout_width="45dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/edit_user_button"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/customer_birthdate"
+        android:layout_width="105dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/birthdate"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_email" />
+
+    <TextView
+        android:id="@+id/birthdate"
+        android:layout_width="126dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/birthdate"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+
+    <TextView
+        android:id="@+id/customer_phone"
+        android:layout_width="102dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/phone_num"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_birthdate" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="126dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/phone_number"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthdate" />
+
+    <TextView
+        android:id="@+id/customer_postal_code"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/postal_code"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_phone" />
+
+    <TextView
+        android:id="@+id/postal_code"
+        android:layout_width="126dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/postal_code"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
+
+
+    <TextView
+        android:id="@+id/customer_email"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/email"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_name" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="248dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/email"
+        android:textAlignment="textEnd"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_name" />
+
+
+    <TextView
+        android:id="@+id/customer_inscription_date"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/inscription_date"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_postal_code" />
+
+    <TextView
+        android:id="@+id/inscription_date"
+        android:layout_width="126dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/inscription_date"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postal_code" />
+
+
+    <TextView
+        android:id="@+id/customer_group"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/group"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_inscription_date" />
+
+    <TextView
+        android:id="@+id/group"
+        android:layout_width="126dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="95dp"
+        android:text="@string/group_name"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_date" />
+
+
+    <Button
+        android:id="@+id/view_back_button"
+        android:layout_width="142dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_group" />
+
+    <Button
+        android:id="@+id/add_group_button"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="56dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/add_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_date" />
+
+    <ImageButton
+        android:id="@+id/quit_group_button"
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="52dp"
+        android:backgroundTint="@color/red"
+        android:contentDescription="@string/quit_from_group_button"
+        android:src="@drawable/ic_baseline_exit_to_app_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_date"
+        app:tint="@color/white" />
+
+    <Button
+        android:id="@+id/change_group_button"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="28dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/change_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_date" />
+
+    <Button
+        android:id="@+id/delete_customer_button_adg"
+        android:layout_width="181dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/delete_customer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

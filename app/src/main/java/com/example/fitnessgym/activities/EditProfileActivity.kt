@@ -123,7 +123,7 @@ class EditProfileActivity : AppCompatActivity() {
                 var userToken: String by observable("") { _,_, userToken ->
                     token = userToken
                 }
-                var photoUrl: String by observable("") { _, oldPhotoUrl, newPhotoUrl ->
+                var photoUrl: String by observable("") { _, _, newPhotoUrl ->
                     if (!isDestroyed) {
                         val firebasePhotoStart =
                             "https://firebasestorage.googleapis.com/v0/b/fitness-gym-80s.appspot.com/o/fitnessgym-images"
@@ -207,9 +207,8 @@ class EditProfileActivity : AppCompatActivity() {
 
                 }
 
-                val i = Intent()
+                setResult(Activity.RESULT_OK)
                 finish()
-                setResult(Activity.RESULT_OK, i)
             }
 
             editUserCancelButton.setOnClickListener() {

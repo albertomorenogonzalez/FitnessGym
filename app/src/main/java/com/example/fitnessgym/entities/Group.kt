@@ -8,5 +8,4 @@ data class Group(
     val name: String = "",
     val docMonitor: String = "",
     val description: String = "",
-    val photo: String? = "",
-    val clients: Array<String>) : Serializable
+    val photo: String? = "",) : Serializable

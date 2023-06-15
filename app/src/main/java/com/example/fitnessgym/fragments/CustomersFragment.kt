@@ -13,12 +13,12 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.example.fitnessgym.activities.AddEditCustomerActivity
-import com.example.fitnessgym.activities.EditProfileActivity
+import com.example.fitnessgym.activities.*
 import com.example.fitnessgym.adapter.CustomerAdapter
 import com.example.fitnessgym.entities.Customer
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.FragmentCustomersBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.properties.Delegates.observable
@@ -28,6 +28,7 @@ class CustomersFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomersBinding
     private lateinit var adapter: CustomerAdapter
+    private var form = ""
     private val db = FirebaseFirestore.getInstance()
 
     private val answer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { verify(it) }
@@ -47,23 +48,41 @@ class CustomersFragment : Fragment() {
         val customerLongClick: (MenuItem, Customer) -> Boolean = { item, customer ->
             when(item.itemId) {
                 R.id.view_customer -> {
-
+                    val i = Intent(context, CustomerViewActivity::class.java)
+                    i.putExtra("customer", customer)
+                    answer.launch(i)
                 }
                 R.id.edit_customer -> {
                     val i = Intent(context, AddEditCustomerActivity::class.java)
-                    i.putExtra("form", "edit")
+                    form = "edit"
+                    i.putExtra("form", form)
                     i.putExtra("customer", customer)
                     answer.launch(i)
                 }
                 R.id.add_customer -> {
                     if (customer.idgroup == "") {
-                        Snackbar.make(binding.root, "a ", Snackbar.LENGTH_LONG).show()
+                        val i = Intent(context, AddChangeGroupActivity::class.java)
+                        i.putExtra("customer_uid", customer.docId)
+                        answer.launch(i)
                     } else {
                         Snackbar.make(binding.root, R.string.customer_in_group, Snackbar.LENGTH_LONG).show()
                     }
                 }
                 R.id.delete_customer -> {
-                    db.collection("clientes").document(customer.docId).delete()
+                    context?.let { it1 ->
+                        MaterialAlertDialogBuilder(it1)
+                            .setTitle(R.string.delete_user)
+                            .setMessage(R.string.delete_customer_message)
+                            .setPositiveButton(R.string.yes) { _, _ ->
+                                db.collection("clientes").document(customer.docId).delete()
+
+                                Snackbar.make(requireView(), "Customer deleted", Snackbar.LENGTH_LONG).show()
+                            }
+                            .setNegativeButton(R.string.no) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    }
                 }
             }
 
@@ -86,7 +105,7 @@ class CustomersFragment : Fragment() {
             if (snapshot != null) {
                 for (document in snapshot.documents) {
                     val id = document.get("id") as Long
-                    val uid = document.get("docId").toString()
+                    val uid = document.id
                     val name = document.get("name").toString()
                     val surname = document.get("surname").toString()
                     val birthdate = document.get("birthdate").toString()
@@ -117,7 +136,8 @@ class CustomersFragment : Fragment() {
 
         binding.addButton.setOnClickListener {
             val i = Intent(context, AddEditCustomerActivity::class.java)
-            i.putExtra("form", "add")
+            form = "add"
+            i.putExtra("form", form)
             answer.launch(i)
         }
     }
@@ -128,7 +148,30 @@ class CustomersFragment : Fragment() {
     private fun verify(data: ActivityResult) {
         when (data.resultCode) {
             AppCompatActivity.RESULT_OK -> {
-                Snackbar.make(binding.root, R.string.customer_successfully_added, Snackbar.LENGTH_LONG).show()
+
+                val form = data.data?.getStringExtra("form")
+                val group = data.data?.getStringExtra("group")
+                val groupName = data.data?.getStringExtra("group_name")
+
+                if (form == "add") {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.customer_successfully_added,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (form == "delete") {
+                    Snackbar.make(
+                        binding.root,
+                        R.string.customer_successfully_deleted,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (group == "group") {
+                    Snackbar.make(binding.root, "User is now in $groupName", Snackbar.LENGTH_LONG).show()
+                } else {
+                    Snackbar.make(binding.root, R.string.customer_successfully_edited, Snackbar.LENGTH_LONG).show()
+                }
+
+
             }
             AppCompatActivity.RESULT_CANCELED -> {}
             else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()

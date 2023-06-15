@@ -13,4 +13,4 @@ data class Customer(
     val postal_code: String = "",
     val photo: String? = "",
     val inscription: String = "",
-    val idgroup: String? = "") : Serializable
+    var idgroup: String? = "") : Serializable

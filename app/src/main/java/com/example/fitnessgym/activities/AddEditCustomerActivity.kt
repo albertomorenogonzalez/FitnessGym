@@ -2,6 +2,7 @@ package com.example.fitnessgym.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -37,6 +38,7 @@ class AddEditCustomerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddEditCustomerBinding
     private val db = FirebaseFirestore.getInstance()
     private var imageUri: Uri? = null
+    private lateinit var photo: String
     private val now: Date = Date()
     private val storageReference: StorageReference = FirebaseStorage.getInstance().getReference(
         "fitnessgym-images/${now}"
@@ -114,7 +116,7 @@ class AddEditCustomerActivity : AppCompatActivity() {
                                     inscriptionDate
                                 )
 
-                                db.collection("clientes").add(newCustomer)
+                                db.collection("clientes").document(uid).set(newCustomer)
                             }
                         }.addOnFailureListener { exception ->
                             Log.e(
@@ -139,9 +141,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
                             inscriptionDate
                         )
 
-                        db.collection("clientes").add(newCustomer)
+                        db.collection("clientes").document(uid).set(newCustomer)
                     }
 
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
 
@@ -151,7 +154,15 @@ class AddEditCustomerActivity : AppCompatActivity() {
         } else {
             val customer = intent.extras?.get("customer") as Customer
 
+            photo = customer.photo.toString()
+
             with (binding) {
+                if (customer.photo != "") {
+                    Glide.with(root).load(customer.photo).into(profilePick)
+                } else {
+                    profilePick.setImageResource(R.drawable.fitness_gym_logo)
+                }
+
                 textUserFirstName.setText(customer.name)
                 textUserLastName.setText(customer.surname)
                 textUserEmail.setText(customer.email)
@@ -211,13 +222,14 @@ class AddEditCustomerActivity : AppCompatActivity() {
                             email,
                             phoneNumber,
                             postalCode,
-                            null,
+                            photo,
                             inscriptionDate
                         )
 
                         db.collection("clientes").document(uid).set(editCustomer)
                     }
 
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
             }
@@ -244,6 +256,7 @@ class AddEditCustomerActivity : AppCompatActivity() {
                 }
                 2 -> {
                     binding.profilePick.setImageResource(R.drawable.fitness_gym_logo)
+                    photo = ""
                 }
             }
         }
