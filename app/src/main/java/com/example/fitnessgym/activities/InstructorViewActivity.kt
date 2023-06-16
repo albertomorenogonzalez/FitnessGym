@@ -55,37 +55,36 @@ class InstructorViewActivity : AppCompatActivity() {
                 } else {
                     profileProfilePick.setImageResource(R.drawable.fitness_gym_logo)
                 }
-
             }
 
+            // Listen to changes in the user document
             userDocRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
-
-                    if (error != null) {
-                        return@addSnapshotListener
-                    }
-
-                    if (snapshot != null && snapshot.exists()) {
-                        val newUserFirstName = snapshot.getString("first_name") ?: ""
-                        val newUserLastName = snapshot.getString("last_name") ?: ""
-                        val newUserBirthdate = snapshot.getString("birthdate") ?: ""
-                        val newUserEmail = snapshot.getString("email") ?: ""
-                        val newUserPhone = snapshot.getString("phone") ?: ""
-                        val newPhotoUrl = snapshot.getString("photo") ?: ""
-
-                        userCompleteName = "$newUserFirstName $newUserLastName"
-                        supportActionBar?.title = userCompleteName
-                        userBirthdate = Dates.showProperDate(newUserBirthdate)
-                        userEmail = newUserEmail
-                        userPhone = newUserPhone
-                        photoUrl = newPhotoUrl
-                    }
+                if (error != null) {
+                    return@addSnapshotListener
                 }
 
+                if (snapshot != null && snapshot.exists()) {
+                    val newUserFirstName = snapshot.getString("first_name") ?: ""
+                    val newUserLastName = snapshot.getString("last_name") ?: ""
+                    val newUserBirthdate = snapshot.getString("birthdate") ?: ""
+                    val newUserEmail = snapshot.getString("email") ?: ""
+                    val newUserPhone = snapshot.getString("phone") ?: ""
+                    val newPhotoUrl = snapshot.getString("photo") ?: ""
+
+                    userCompleteName = "$newUserFirstName $newUserLastName"
+                    supportActionBar?.title = userCompleteName
+                    userBirthdate = Dates.showProperDate(newUserBirthdate)
+                    userEmail = newUserEmail
+                    userPhone = newUserPhone
+                    photoUrl = newPhotoUrl
+                }
+            }
+
+            // Handle click event on the back button
             backButton.setOnClickListener {
                 finish()
                 return@setOnClickListener
             }
-
         }
     }
 }

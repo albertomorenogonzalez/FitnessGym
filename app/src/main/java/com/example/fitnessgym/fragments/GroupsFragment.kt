@@ -14,17 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.fitnessgym.activities.AddEditGroupActivity
 import com.example.fitnessgym.activities.GroupCustomersActivity
 import com.example.fitnessgym.activities.GroupViewActivity
-import com.example.fitnessgym.activities.InstructorViewActivity
 import com.example.fitnessgym.adapter.GroupAdapter
 import com.example.fitnessgym.entities.Group
-import com.example.fitnessgym.entities.Instructor
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.FragmentGroupsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.properties.Delegates.observable
-
 
 class GroupsFragment : Fragment() {
 
@@ -33,6 +30,7 @@ class GroupsFragment : Fragment() {
     private var form = ""
     private val db = FirebaseFirestore.getInstance()
 
+    // Activity result launcher using ActivityResultContracts.StartActivityForResult
     private val answer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { verify(it) }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -42,12 +40,14 @@ class GroupsFragment : Fragment() {
     ): View? {
         binding = FragmentGroupsBinding.inflate(inflater, container, false)
 
+        // List to hold the group data
         val groupList: MutableList<Group> by observable(mutableListOf()) { _, _, _ ->
             adapter.notifyDataSetChanged()
         }
 
         val groupsCollectionRef = db.collection("grupos")
 
+        // Long click listener for each group in the list
         val groupLongClick: (MenuItem, Group) -> Boolean = { item, group ->
 
             when (item.itemId) {
@@ -91,11 +91,14 @@ class GroupsFragment : Fragment() {
 
         }
 
+        // Initialize the adapter with the group list and long click listener
         adapter = GroupAdapter(groupList, groupLongClick)
 
+        // Set the adapter on the RecyclerView
         binding.groupsView.adapter = adapter
         binding.groupsView.setHasFixedSize(true)
 
+        // Listen for changes in the groups collection
         groupsCollectionRef.addSnapshotListener { snapshot, error ->
             if (error != null) {
                 return@addSnapshotListener
@@ -127,6 +130,7 @@ class GroupsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        // Click listener for the add button
         binding.addButton.setOnClickListener {
             val i = Intent(context, AddEditGroupActivity::class.java)
             form = "add"
@@ -136,6 +140,8 @@ class GroupsFragment : Fragment() {
     }
 
     /**
+     * Handle the activity result from AddEditGroupActivity or GroupViewActivity.
+     *
      * @param data: ActivityResult
      */
     private fun verify(data: ActivityResult) {
@@ -143,14 +149,17 @@ class GroupsFragment : Fragment() {
             AppCompatActivity.RESULT_OK -> {
                 Snackbar.make(binding.root, R.string.operation_completed, Snackbar.LENGTH_LONG).show()
             }
-            AppCompatActivity.RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
+            AppCompatActivity.RESULT_CANCELED -> {
+                // Handle the canceled result if needed
+            }
+            else -> {
+                Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = GroupsFragment()
-
     }
 }

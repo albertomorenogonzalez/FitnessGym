@@ -5,15 +5,12 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.fitnessgym.adapter.CustomerAdapter
 import com.example.fitnessgym.adapter.CustomerAssignedAdapter
 import com.example.fitnessgym.entities.Customer
-import com.example.fitnessgym.entities.Group
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityGroupCustomersBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
 @SuppressLint("NotifyDataSetChanged")
@@ -23,6 +20,7 @@ class GroupCustomersActivity : AppCompatActivity() {
     private lateinit var adapter: CustomerAssignedAdapter
     private val db = FirebaseFirestore.getInstance()
 
+    // Create a mutable list of customers with observable property delegate to update the adapter
     private val customerList: MutableList<Customer> by observable(mutableListOf()) { _, _, _ ->
         adapter.notifyDataSetChanged()
     }
@@ -33,6 +31,7 @@ class GroupCustomersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Set the activity title with the group name passed via intent
         supportActionBar?.title = intent.extras?.get("group_name").toString()
         Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(
             ColorDrawable(resources.getColor(
@@ -44,15 +43,18 @@ class GroupCustomersActivity : AppCompatActivity() {
 
         adapter = CustomerAssignedAdapter(customerList)
 
+        // Set the adapter for the customers view
         binding.customersView.adapter = adapter
         binding.customersView.setHasFixedSize(true)
 
         customersCollectionRef.addSnapshotListener { snapshot, error ->
             if (error != null) {
+                // Log any errors that occur while listening for customer changes
                 Log.e("CustomersFragment", "Error listening for customer changes: ${error.message}")
                 return@addSnapshotListener
             }
 
+            // Clear the customer list before populating it again
             customerList.clear()
 
             if (snapshot != null) {
@@ -82,8 +84,8 @@ class GroupCustomersActivity : AppCompatActivity() {
                     }
                 }
 
+                // Notify the adapter that the data has changed
                 adapter.notifyDataSetChanged()
-
             }
         }
 

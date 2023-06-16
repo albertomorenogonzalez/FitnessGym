@@ -1,39 +1,31 @@
 package com.example.fitnessgym.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Customer
-import com.example.fitnessgym.functions.Dates
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.CustomerAssignedLayoutBinding
-import com.fitness.fitnessgym.databinding.CustomerLayoutBinding
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import kotlin.properties.Delegates
-import kotlin.properties.Delegates.observable
 
-class CustomerAssignedAdapter(var customers: MutableList<Customer>): RecyclerView.Adapter<CustomerAssignedAdapter.CustomerAssignedContainer>() {
+class CustomerAssignedAdapter(var customers: MutableList<Customer>) : RecyclerView.Adapter<CustomerAssignedAdapter.CustomerAssignedContainer>() {
 
-    inner class CustomerAssignedContainer(private val layout: CustomerAssignedLayoutBinding): RecyclerView.ViewHolder(layout.root) {
+    inner class CustomerAssignedContainer(private val layout: CustomerAssignedLayoutBinding) : RecyclerView.ViewHolder(layout.root) {
+
         @SuppressLint("SetTextI18n")
         fun bindCustomer(customer: Customer) {
-            with (layout) {
+            with(layout) {
+                // Load customer's photo using Glide library if available, otherwise use a default image
                 if (customer.photo != "") {
                     Glide.with(root).load(customer.photo).into(profilePick)
                 } else {
                     profilePick.setImageResource(R.drawable.fitness_gym_logo)
                 }
 
+                // Set customer's name and surname
                 name.text = "${customer.name} ${customer.surname}"
             }
-
         }
     }
 
@@ -45,7 +37,7 @@ class CustomerAssignedAdapter(var customers: MutableList<Customer>): RecyclerVie
     }
 
     override fun onBindViewHolder(holder: CustomerAssignedContainer, position: Int) {
-        holder.bindCustomer((customers[position]))
+        holder.bindCustomer(customers[position])
     }
 
     override fun getItemCount(): Int = customers.size

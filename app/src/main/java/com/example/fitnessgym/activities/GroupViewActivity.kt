@@ -4,13 +4,10 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
-import com.example.fitnessgym.entities.Customer
 import com.example.fitnessgym.entities.Group
-import com.example.fitnessgym.functions.Dates
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityGroupViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,6 +24,7 @@ class GroupViewActivity : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
 
+    // Register activity result to handle the result from AddEditGroupActivity
     private val answer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { verify(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +35,12 @@ class GroupViewActivity : AppCompatActivity() {
 
         Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.red))))
 
-        with (binding) {
+        with(binding) {
             var group = intent.extras?.get("group") as Group
 
             val groupDocRef = db.collection("grupos").document(group.docId)
 
+            // Use observable delegate properties to update UI elements automatically
             var groupName: String by observable("") { _, _, newGroupName ->
                 groupAddName.text = newGroupName
             }
@@ -54,7 +53,6 @@ class GroupViewActivity : AppCompatActivity() {
                 groupAddDescription.text = newGroupDescription
             }
 
-
             var photoUrl: String by observable("") { _, _, newPhotoUrl ->
                 if (!isDestroyed) {
                     val firebasePhotoStart =
@@ -65,7 +63,6 @@ class GroupViewActivity : AppCompatActivity() {
                         groupPick.setImageResource(R.drawable.fitness_gym_logo)
                     }
                 }
-
             }
 
             groupDocRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
@@ -104,7 +101,7 @@ class GroupViewActivity : AppCompatActivity() {
                 }
             }
 
-
+            // Handle click events on UI elements
             addEditGroupButton.setOnClickListener {
                 val i = Intent(this@GroupViewActivity, AddEditGroupActivity::class.java)
                 val form = "edit"
@@ -129,9 +126,6 @@ class GroupViewActivity : AppCompatActivity() {
                     .show()
             }
 
-
-
-
             cancelButton.setOnClickListener {
                 finish()
                 return@setOnClickListener
@@ -140,6 +134,7 @@ class GroupViewActivity : AppCompatActivity() {
     }
 
     /**
+     * Handle the result from AddEditGroupActivity.
      * @param data: ActivityResult
      */
     private fun verify(data: ActivityResult) {
@@ -148,7 +143,7 @@ class GroupViewActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, R.string.operation_completed, Snackbar.LENGTH_LONG).show()
             }
             RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
+            else -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
         }
     }
 }

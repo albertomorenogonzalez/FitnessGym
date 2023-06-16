@@ -2,21 +2,17 @@ package com.example.fitnessgym.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fitnessgym.activities.AddEditCustomerActivity
 import com.example.fitnessgym.activities.AddEditGroupActivity
 import com.example.fitnessgym.activities.ConfigActivity
-import com.example.fitnessgym.activities.MainActivity
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +23,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -36,6 +31,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        // Set long click listener on the root view
         binding.root.setOnLongClickListener {
             val popupMenu = PopupMenu(context, binding.welcomeText)
             popupMenu.menuInflater.inflate(R.menu.context_menu, popupMenu.menu)
@@ -43,6 +39,7 @@ class HomeFragment : Fragment() {
 
                 val form = "add"
 
+                // Handle menu item clicks
                 when (menuItem.itemId) {
                     R.id.go_to_settings -> {
                         val i = Intent(context, ConfigActivity::class.java)
@@ -75,7 +72,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        with (binding) {
+        with(binding) {
             customerButton.setOnClickListener {
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.container, CustomersFragment())
@@ -93,29 +90,33 @@ class HomeFragment : Fragment() {
     }
 
     /**
+     * Handle the activity result from AddEditCustomerActivity or AddEditGroupActivity.
+     *
      * @param data: ActivityResult
      */
     private fun verify(data: ActivityResult) {
         when (data.resultCode) {
             AppCompatActivity.RESULT_OK -> {
-
                 val name = data.data?.getStringExtra("name")
 
+                // Show a snackbar message based on the result
                 if (name == "group") {
                     Snackbar.make(binding.root, R.string.group_added_successfully, Snackbar.LENGTH_LONG).show()
                 } else {
                     Snackbar.make(binding.root, R.string.customer_successfully_added, Snackbar.LENGTH_LONG).show()
                 }
-
             }
-            AppCompatActivity.RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
+            AppCompatActivity.RESULT_CANCELED -> {
+                // Handle the canceled result if needed
+            }
+            else -> {
+                Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = HomeFragment()
-
     }
 }

@@ -1,14 +1,13 @@
 package com.example.fitnessgym.services
 
-import android.annotation.SuppressLint
-import android.util.Log
 import com.example.fitnessgym.entities.Instructor
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
 
 class InstructorService {
     companion object {
+        // Method to register or edit an instructor in the Firebase Firestore database
         fun registerOrEditInstructor(db: FirebaseFirestore, instructor: Instructor, token: String) {
+            // Create a HashMap with the instructor data
             val doc = hashMapOf<String, Any>(
                 "uid" to instructor.uid,
                 "first_name" to instructor.first_name,
@@ -22,8 +21,8 @@ class InstructorService {
                 "token" to token
             )
 
+            // Set the document with the instructor data in the "usuarios" collection
             db.collection("usuarios").document(instructor.uid).set(doc)
         }
     }
-
 }

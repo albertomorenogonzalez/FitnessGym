@@ -2,7 +2,6 @@ package com.example.fitnessgym.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Intent
@@ -16,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -39,11 +37,12 @@ import kotlin.properties.Delegates.observable
 
 class AddEditGroupActivity : AppCompatActivity() {
 
+    // Declare variables and references
     private lateinit var binding: ActivityAddEditGroupBinding
     private val db = FirebaseFirestore.getInstance()
     private var imageUri: Uri? = null
     private lateinit var photo: String
-    private val formatter : SimpleDateFormat = SimpleDateFormat(
+    private val formatter: SimpleDateFormat = SimpleDateFormat(
         "yyyy-MM-dd-HH-mm-ss", Locale.GERMANY
     )
     private val now: Date = Date()
@@ -53,6 +52,7 @@ class AddEditGroupActivity : AppCompatActivity() {
     )
     private lateinit var adapter: ArrayAdapter<String>
 
+    // Activity result contracts for gallery and camera
     @SuppressLint("Range")
     private val launchGallery =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -75,15 +75,18 @@ class AddEditGroupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflate the layout and set the content view
         binding = ActivityAddEditGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.setTitle(R.string.add_customer)
 
+        // Set background color for the action bar
         Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.red))))
 
         val form = intent.extras?.get("form")
 
+        // Create an adapter for the dropdown list
         val userNameList: MutableList<String> by observable(mutableListOf()) { _, _, _ ->
             adapter.notifyDataSetChanged()
         }
@@ -98,12 +101,14 @@ class AddEditGroupActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Initialize the user UID list and Firebase Firestore collection reference
             val userUIDList: MutableList<String> by observable(mutableListOf()) { _, _, _ ->
                 adapter.notifyDataSetChanged()
             }
 
             val usersCollectionRef = db.collection("usuarios")
 
+            // Create a Group object for editing or add a new one
             var group = Group()
 
             if (form == "edit") {
@@ -112,6 +117,7 @@ class AddEditGroupActivity : AppCompatActivity() {
 
             textGroupInstructorName.adapter = adapter
 
+            // Retrieve user data from Firestore and update the adapter
             usersCollectionRef.addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     // Handle error
@@ -122,7 +128,6 @@ class AddEditGroupActivity : AppCompatActivity() {
 
                 if (form == "add") {
                     userNameList.add(getString(R.string.select_instructor))
-
                     photo = ""
                 } else {
                     textGroupName.setText(group.name)
@@ -142,7 +147,6 @@ class AddEditGroupActivity : AppCompatActivity() {
 
                     addEditGroupButton.setText(R.string.edit_group)
                 }
-
 
                 if (snapshot != null) {
                     for (document in snapshot.documents) {
@@ -165,13 +169,11 @@ class AddEditGroupActivity : AppCompatActivity() {
                 val selectedItemIndex = userNameList.indexOf(selectedItem) - 1
                 val selectedUid = userUIDList[selectedItemIndex]
 
-
                 val uid = if (form == "add") {
                     db.collection("grupos").document().id
                 } else {
                     group.docId
                 }
-
 
                 val name = textGroupName.text.toString()
                 val description = textGroupDescription.text.toString()
@@ -217,7 +219,7 @@ class AddEditGroupActivity : AppCompatActivity() {
 
     }
 
-
+    // Show dialog to choose between gallery and camera for photo selection
     private fun chooseGalleryOrPhoto() {
         val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle(R.string.select_image)
@@ -246,6 +248,7 @@ class AddEditGroupActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // Request permission to access gallery and launch gallery intent
     private fun requestPermissionForGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             when {
@@ -268,6 +271,7 @@ class AddEditGroupActivity : AppCompatActivity() {
         }
     }
 
+    // Request permission to access camera and launch camera intent
     private fun requestPermissionForPhoto() {
         val cameraPermission = Manifest.permission.CAMERA
 
@@ -281,6 +285,7 @@ class AddEditGroupActivity : AppCompatActivity() {
         }
     }
 
+    // Handle the result of permission request for gallery access
     private val requestPermissionGalleryLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -290,6 +295,7 @@ class AddEditGroupActivity : AppCompatActivity() {
             }
         }
 
+    // Handle the result of permission request for camera access
     private val requestPermissionPhotoLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -299,6 +305,7 @@ class AddEditGroupActivity : AppCompatActivity() {
             }
         }
 
+    // Launch gallery intent to select a photo
     private fun pickPhotoFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -306,11 +313,13 @@ class AddEditGroupActivity : AppCompatActivity() {
         launchGallery.launch(intent)
     }
 
+    // Launch camera intent to capture a photo
     private fun pickPhoto() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         launchCamera.launch(intent)
     }
 
+    // Save the captured image to device storage
     private fun saveImage(bitmap: Bitmap) {
         val outputStream: OutputStream
         var file: File? = null

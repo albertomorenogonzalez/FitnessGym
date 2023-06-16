@@ -11,36 +11,46 @@ import com.example.fitnessgym.entities.Instructor
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.InstructorLayoutBinding
 
-class InstructorAdapter(var instructors: MutableList<Instructor>,
-                        val instructorLongClick: (MenuItem, Instructor) -> Boolean): RecyclerView.Adapter<InstructorAdapter.InstructorsContainer>() {
+class InstructorAdapter(
+    var instructors: MutableList<Instructor>,
+    val instructorLongClick: (MenuItem, Instructor) -> Boolean
+) : RecyclerView.Adapter<InstructorAdapter.InstructorsContainer>() {
 
-    inner class InstructorsContainer(private val layout: InstructorLayoutBinding): RecyclerView.ViewHolder(layout.root) {
+    inner class InstructorsContainer(private val layout: InstructorLayoutBinding) :
+        RecyclerView.ViewHolder(layout.root) {
+
         @SuppressLint("SetTextI18n")
         fun bindInstructor(instructor: Instructor) {
-             with (layout) {
-                 if (instructor.photo != "") {
-                     Glide.with(root).load(instructor.photo).into(profilePick)
-                 } else {
-                     profilePick.setImageResource(R.drawable.fitness_gym_logo)
-                 }
+            with(layout) {
+                // Load instructor's photo using Glide library if available, otherwise use a default image
+                if (instructor.photo != "") {
+                    Glide.with(root).load(instructor.photo).into(profilePick)
+                } else {
+                    profilePick.setImageResource(R.drawable.fitness_gym_logo)
+                }
 
-                 name.text = "${instructor.first_name} ${instructor.last_name}"
-                 email.text = instructor.email
+                // Set instructor's name and email
+                name.text = "${instructor.first_name} ${instructor.last_name}"
+                email.text = instructor.email
 
-                 root.setOnLongClickListener {
-                     val menu = PopupMenu(root.context, name)
+                // Set a long click listener on the root view to show a popup menu for options
+                root.setOnLongClickListener {
+                    val menu = PopupMenu(root.context, name)
 
-                     menu.inflate(R.menu.instructor_options)
+                    // Inflate the menu layout for instructor options
+                    menu.inflate(R.menu.instructor_options)
 
-                     menu.setOnMenuItemClickListener {
-                         instructorLongClick(it, instructor)
-                     }
+                    // Set a menu item click listener to handle the selected option
+                    menu.setOnMenuItemClickListener {
+                        instructorLongClick(it, instructor)
+                    }
 
-                     menu.show()
+                    // Show the popup menu
+                    menu.show()
 
-                     true
-                 }
-             }
+                    true
+                }
+            }
         }
     }
 
