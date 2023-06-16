@@ -178,3 +178,10 @@ Problemas: Al subir una foto proveniente directamente de la galería ocurre un e
 
 Al entrar en el ProfileFragment se pueden ver todos los datos del usuario activo, y se puede tanto eliminar el usuario como editar los datos. 
 El problema con las imágenes de galería en la RegisterActivity aún no está solucionado, pero en EditProfileActivity no hay ningún problema.
+
+
+- [16/06/2023](https://github.com/albertomorenogonzalez/FitnessGym/commit/e7d51a451573292125812f7518ff2774ff165070)
+
+Aplicación compleatada. Todas las vistas se muestran, navegación entre las distintas partes de la aplicación óptima. CRUDs completados. Cambio de lenguage de la aplicación funcional. No ha sido posible implementar el cambio de tema y por eso se muestra un texto que indica que aún no se puede
+
+Aplicación comentada (en inglés) y APK subida. Arreglados todos los problemas excepto el de la galería en el RegisterActivity
