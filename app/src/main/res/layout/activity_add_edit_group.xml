@@ -6,4 +6,180 @@
     android:layout_height="match_parent"
     tools:context="com.example.fitnessgym.activities.AddEditGroupActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/group_profile_pick"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="106dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profilePick"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/profile_pick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/fitness_gym_logo" />
+
+        <ImageButton
+            android:id="@+id/addPhotoIcon"
+            android:layout_width="58dp"
+            android:layout_height="59dp"
+            android:contentDescription="@string/edit_photo_icon"
+            android:src="@drawable/image_edit_outline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="?attr/colorSecondary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="102dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="45dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/name"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_profile_pick" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/group_add_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="181dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_profile_pick">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_group_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/group_instructor_name"
+        android:layout_width="102dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/instructor"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_name" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/group_add_instructor_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="181dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/background_text_group_instructor_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:enabled="false"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Spinner
+        android:id="@+id/text_group_instructor_name"
+        android:layout_width="181dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_name" />
+
+    <TextView
+        android:id="@+id/group_description"
+        android:layout_width="102dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/description"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_instructor_name" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/group_add_description"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="280dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_group_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/description"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:maxLines="5" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="31dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_description" />
+
+    <Button
+        android:id="@+id/add_edit_group_button"
+        android:layout_width="161dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="31dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/add_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

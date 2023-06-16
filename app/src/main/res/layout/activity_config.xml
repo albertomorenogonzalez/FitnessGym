@@ -6,4 +6,127 @@
     android:layout_height="match_parent"
     tools:context="com.example.fitnessgym.activities.ConfigActivity">
 
+    <TextView
+        android:id="@+id/language_title"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="56dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/language"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/selector_language_background"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="181dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="115dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/language_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/selector_language_background_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:enabled="false"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/selector_language"
+        android:layout_width="181dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/language_title" />
+
+
+    <TextView
+        android:id="@+id/theme_title"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginEnd="56dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/theme"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selector_language_background" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/selector_theme_background"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="181dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="115dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/theme_title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/selector_theme_background_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:enabled="false"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/selector_theme"
+        android:layout_width="181dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="115dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/theme_title" />
+
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="140dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="84dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/save_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="140dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="84dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/back_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

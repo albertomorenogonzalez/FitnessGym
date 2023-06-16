@@ -1,20 +1,23 @@
 package com.example.fitnessgym.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.fitnessgym.entities.Customer
 import com.example.fitnessgym.entities.Group
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.GroupLayoutBinding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
-class GroupAdapter(var groups: MutableList<Group>): RecyclerView.Adapter<GroupAdapter.GroupContainer>() {
+class GroupAdapter(var groups: MutableList<Group>,
+                   val groupLongClick: (MenuItem, Group) -> Boolean): RecyclerView.Adapter<GroupAdapter.GroupContainer>() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -23,7 +26,7 @@ class GroupAdapter(var groups: MutableList<Group>): RecyclerView.Adapter<GroupAd
             with (layout) {
                 val userDocRef = db.collection("usuarios").document(group.docMonitor)
                 var userName: String by observable("") { _, _, newUserName ->
-                    instructor.text = newUserName
+                    instructor.text = root.context.getString(R.string.instructor, newUserName)
                 }
 
                 userDocRef.addSnapshotListener { snapshot: DocumentSnapshot?, error: FirebaseFirestoreException? ->
@@ -33,8 +36,9 @@ class GroupAdapter(var groups: MutableList<Group>): RecyclerView.Adapter<GroupAd
 
                     if (snapshot != null && snapshot.exists()) {
                         val newUserName = snapshot.getString("first_name") ?: ""
+                        val newUserSurname = snapshot.getString("last_name") ?: ""
 
-                        userName = newUserName
+                        userName = "$newUserName $newUserSurname"
                     }
                 }
 
@@ -45,6 +49,20 @@ class GroupAdapter(var groups: MutableList<Group>): RecyclerView.Adapter<GroupAd
                 }
 
                 groupName.text = group.name
+
+                root.setOnLongClickListener {
+                    val menu = PopupMenu(root.context, groupName)
+
+                    menu.inflate(R.menu.group_options)
+
+                    menu.setOnMenuItemClickListener {
+                        groupLongClick(it, group)
+                    }
+
+                    menu.show()
+
+                    true
+                }
 
             }
         }

@@ -7,8 +7,10 @@ import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
@@ -23,10 +25,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Instructor
+import com.example.fitnessgym.functions.ChangeLanguage
 import com.example.fitnessgym.functions.Dates
 import com.example.fitnessgym.services.InstructorService
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityEditProfileBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -90,6 +94,8 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.red))))
 
         supportActionBar?.setTitle(R.string.edit_profile)
 
@@ -175,21 +181,32 @@ class EditProfileActivity : AppCompatActivity() {
                             uploadTask.storage.downloadUrl.addOnSuccessListener { downloadUri ->
                                 val photoUrl = downloadUri.toString()
                                 if (uid != null) {
-                                    val ins = Instructor(uid,
+                                    val ins = Instructor(
+                                        uid,
                                         textUserFirstName.text.toString(),
                                         textUserLastName.text.toString(),
                                         textUserBirthdate.text.toString(),
                                         auth.currentUser?.email.toString(),
                                         textUserPhone.text.toString(),
                                         textUserDni.text.toString(),
-                                        photoUrl)
+                                        photoUrl
+                                    )
                                     InstructorService.registerOrEditInstructor(db, ins, token)
                                 }
-                            }.addOnFailureListener { exception ->
-                                Log.e("Firebase Storage", "Error al obtener la URL de descarga", exception)
+                            }.addOnFailureListener {
+                                Snackbar.make(
+                                    binding.root,
+                                    R.string.error_obtaining_photo_url,
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
                             }
-                        }.addOnFailureListener { exception ->
-                            Log.e("Firebase Storage", "Error al subir la foto", exception)
+                                .addOnFailureListener {
+                                    Snackbar.make(
+                                        binding.root,
+                                        R.string.error_uploading_photo,
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
                         }
                     }
                 } else {
@@ -221,10 +238,10 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private fun chooseGalleryOrPhoto() {
-        val builder = AlertDialog.Builder(this)
+        val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle(R.string.select_image)
 
-        val options = arrayOf("Gallery", "Camera", "Quit Photo")
+        val options = arrayOf(getString(R.string.gallery), getString(R.string.camera), getString(R.string.quit_photo))
         builder.setItems(options) { _, which ->
             when (which) {
                 0 -> {

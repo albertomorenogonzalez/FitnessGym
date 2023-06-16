@@ -41,7 +41,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="250dp"
             android:layout_marginTop="100dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/red"
             android:src="@drawable/ic_plus_24"
             android:contentDescription="@string/add_group" />
 

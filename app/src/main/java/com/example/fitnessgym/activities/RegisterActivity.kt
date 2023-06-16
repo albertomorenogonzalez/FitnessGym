@@ -7,6 +7,7 @@ import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
@@ -29,10 +30,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Instructor
+import com.example.fitnessgym.functions.ChangeLanguage
 import com.example.fitnessgym.functions.Dates
 import com.example.fitnessgym.services.InstructorService
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityRegisterBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -142,7 +145,11 @@ class RegisterActivity : AppCompatActivity() {
                 val pw = txtPw.text.toString().trim()
                 val pwRepeat = txtPwRepeat.text.toString().trim()
 
-                if (email.isNotEmpty() || email.isNotBlank() && pw.isNotEmpty() || pw.isNotBlank()) {
+                if (email.isNotEmpty() || email.isNotBlank() && pw.isNotEmpty() || pw.isNotBlank()
+                    && name.isNotEmpty() || name.isNotBlank() && surname.isNotEmpty() || surname.isNotBlank()
+                    && birthdate.isNotEmpty() || birthdate.isNotBlank()
+                    && telephoneNumber.isNotEmpty() || telephoneNumber.isNotBlank()
+                    && pwRepeat.isNotEmpty() || pwRepeat.isNotBlank()) {
                     if (pw == pwRepeat) {
                         Firebase.auth.createUserWithEmailAndPassword(email, pw)
                             .addOnSuccessListener { authResult ->
@@ -161,11 +168,11 @@ class RegisterActivity : AppCompatActivity() {
                                                     val ins = Instructor(uid, name, surname, birthdate, email, telephoneNumber, dni, photoUrl)
                                                     InstructorService.registerOrEditInstructor(db, ins, token)
                                                 }
-                                            }.addOnFailureListener { exception ->
-                                                Log.e("Firebase Storage", "Error al obtener la URL de descarga", exception)
+                                            }.addOnFailureListener {
+                                                Snackbar.make(binding.root, R.string.error_obtaining_photo_url, Snackbar.LENGTH_SHORT).show()
                                             }
-                                        }.addOnFailureListener { exception ->
-                                            Log.e("Firebase Storage", "Error al subir la foto", exception)
+                                        }.addOnFailureListener {
+                                            Snackbar.make(binding.root, R.string.error_uploading_photo, Snackbar.LENGTH_SHORT).show()
                                         }
                                     } else {
                                         if (uid != null && token != null) {
@@ -173,8 +180,8 @@ class RegisterActivity : AppCompatActivity() {
                                             InstructorService.registerOrEditInstructor(db, ins, token)
                                         }
                                     }
-                                }?.addOnFailureListener { exception ->
-                                    Log.e("Firebase Auth", "Error al obtener el token de autenticación", exception)
+                                }?.addOnFailureListener {
+                                    Snackbar.make(root, R.string.token_error, Snackbar.LENGTH_LONG).show()
                                 }
                             }
                             .addOnFailureListener {
@@ -213,10 +220,10 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun chooseGalleryOrPhoto() {
-        val builder = AlertDialog.Builder(this)
+        val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle(R.string.select_image)
 
-        val options = arrayOf("Gallery", "Camera")
+        val options = arrayOf(getString(R.string.gallery), getString(R.string.camera))
         builder.setItems(options) { _, which ->
             when (which) {
                 0 -> {

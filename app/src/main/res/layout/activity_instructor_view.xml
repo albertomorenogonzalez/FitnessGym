@@ -1,16 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fitnessgym.fragments.ProfileFragment">
+    tools:context="com.example.fitnessgym.activities.InstructorViewActivity">
 
     <ImageView
         android:id="@+id/profile_profile_pick"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="105dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="106dp"
         android:contentDescription="@string/user_s_profile_pick"
         android:src="@drawable/fitness_gym_logo"
@@ -18,38 +19,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/profile_name"
         android:layout_width="278dp"
         android:layout_height="40dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="67dp"
         android:fontFamily="@font/bebas_neue_regular"
         android:text="@string/name_hint"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_user_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_profile_pick" />
-
-    <ImageButton
-        android:id="@+id/edit_user_button"
-        android:layout_width="45dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="290dp"
-        android:layout_marginEnd="36dp"
-        android:contentDescription="@string/edit_user_button"
-        android:src="@drawable/ic_baseline_edit_note_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/profile_birthdate"
         android:layout_width="132dp"
         android:layout_height="32dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="55dp"
         android:fontFamily="@font/bebas_neue_regular"
         android:text="@string/birthdate"
         android:textSize="25sp"
@@ -60,7 +51,7 @@
         android:id="@+id/user_birthdate"
         android:layout_width="126dp"
         android:layout_height="25dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="56dp"
         android:text="@string/birthdate"
         android:textAlignment="textEnd"
@@ -116,41 +107,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_email" />
 
-    <TextView
-        android:id="@+id/profile_dni"
-        android:layout_width="126dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/bebas_neue_regular"
-        android:text="@string/dni"
-        android:textSize="25sp"
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="150dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="31dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/back"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_phone" />
 
-    <TextView
-        android:id="@+id/user_dni"
-        android:layout_width="126dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="56dp"
-        android:text="@string/dni"
-        android:textAlignment="textEnd"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_phone" />
-
-    <Button
-        android:id="@+id/delete_user_button"
-        android:layout_width="349dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="31dp"
-        android:text="@string/delete_user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_dni" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,8 @@ package com.example.fitnessgym.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +13,12 @@ import com.example.fitnessgym.adapter.GroupAdapter
 import com.example.fitnessgym.adapter.GroupAssignAdapter
 import com.example.fitnessgym.entities.Customer
 import com.example.fitnessgym.entities.Group
+import com.example.fitnessgym.functions.ChangeLanguage
+import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityAddChangeGroupBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
@@ -29,7 +35,7 @@ class AddChangeGroupActivity : AppCompatActivity() {
         binding = ActivityAddChangeGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.red))))
 
         val groupsCollectionRef = db.collection("grupos")
 
@@ -52,8 +58,8 @@ class AddChangeGroupActivity : AppCompatActivity() {
                     setResult(Activity.RESULT_OK, i)
                     finish()
                 }
-                .addOnFailureListener { e ->
-                    Log.e("AAA", "Error al añadir el ID del grupo al Customer", e)
+                .addOnFailureListener {
+                    Snackbar.make(binding.root, R.string.error_adding_id, Snackbar.LENGTH_SHORT).show()
                 }
         }
 

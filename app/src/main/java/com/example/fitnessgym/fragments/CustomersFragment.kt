@@ -76,7 +76,7 @@ class CustomersFragment : Fragment() {
                             .setPositiveButton(R.string.yes) { _, _ ->
                                 db.collection("clientes").document(customer.docId).delete()
 
-                                Snackbar.make(requireView(), "Customer deleted", Snackbar.LENGTH_LONG).show()
+                                Snackbar.make(requireView(), R.string.customer_successfully_deleted, Snackbar.LENGTH_LONG).show()
                             }
                             .setNegativeButton(R.string.no) { dialog, _ ->
                                 dialog.dismiss()
@@ -166,7 +166,7 @@ class CustomersFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else if (group == "group") {
-                    Snackbar.make(binding.root, "User is now in $groupName", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, getString(R.string.customer_in_a_group, groupName), Snackbar.LENGTH_LONG).show()
                 } else {
                     Snackbar.make(binding.root, R.string.customer_successfully_edited, Snackbar.LENGTH_LONG).show()
                 }
@@ -174,7 +174,7 @@ class CustomersFragment : Fragment() {
 
             }
             AppCompatActivity.RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()
+            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
         }
     }
 

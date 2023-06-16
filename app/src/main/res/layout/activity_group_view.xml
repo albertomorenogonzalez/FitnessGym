@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.fitnessgym.activities.GroupViewActivity">
+
+    <ImageView
+        android:id="@+id/group_pick"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="106dp"
+        android:contentDescription="@string/profile_pick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fitness_gym_logo" />
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="102dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="45dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/name"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_pick" />
+
+
+    <TextView
+        android:id="@+id/group_add_name"
+        android:layout_width="181dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/name"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_pick" />
+
+
+    <TextView
+        android:id="@+id/group_instructor_name"
+        android:layout_width="102dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/instructor"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_name" />
+
+
+    <TextView
+        android:id="@+id/group_add_instructor_name"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/instructor"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_name" />
+
+    <TextView
+        android:id="@+id/group_description"
+        android:layout_width="102dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/bebas_neue_regular"
+        android:text="@string/description"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_instructor_name" />
+
+
+    <TextView
+        android:id="@+id/group_add_description"
+        android:layout_width="284dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="@string/description"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_description" />
+
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="126dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="31dp"
+        android:backgroundTint="@color/gray"
+        android:text="@string/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_description" />
+
+    <Button
+        android:id="@+id/add_edit_group_button"
+        android:layout_width="137dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="11dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/edit_group"
+        app:layout_constraintEnd_toStartOf="@+id/delete_group"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_add_description" />
+
+    <ImageButton
+        android:id="@+id/delete_group"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/red"
+        android:contentDescription="@string/delete_button"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/add_edit_group_button"
+        app:tint="@color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

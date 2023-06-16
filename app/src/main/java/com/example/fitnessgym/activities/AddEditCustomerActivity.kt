@@ -7,8 +7,10 @@ import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.ColorDrawable
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
@@ -22,15 +24,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Customer
+import com.example.fitnessgym.functions.ChangeLanguage
 import com.example.fitnessgym.functions.Dates
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityAddEditCustomerBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddEditCustomerActivity : AppCompatActivity() {
@@ -39,9 +45,13 @@ class AddEditCustomerActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private var imageUri: Uri? = null
     private lateinit var photo: String
+    private val formatter : SimpleDateFormat = SimpleDateFormat(
+        "yyyy-MM-dd-HH-mm-ss", Locale.GERMANY
+    )
     private val now: Date = Date()
+    private val fileName = formatter.format(now)
     private val storageReference: StorageReference = FirebaseStorage.getInstance().getReference(
-        "fitnessgym-images/${now}"
+        "fitnessgym-images/$fileName"
     )
 
     @SuppressLint("Range")
@@ -76,6 +86,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
 
         binding = ActivityAddEditCustomerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.red))))
+
+        supportActionBar?.setTitle(R.string.add_customer)
 
         val form = intent.extras?.get("form")
 
@@ -118,14 +132,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
 
                                 db.collection("clientes").document(uid).set(newCustomer)
                             }
-                        }.addOnFailureListener { exception ->
-                            Log.e(
-                                "Firebase Storage",
-                                "Error al obtener la URL de descarga",
-                                exception
-                            )
-                        }.addOnFailureListener { exception ->
-                            Log.e("Firebase Storage", "Error al subir la foto", exception)
+                        }.addOnFailureListener {
+                            Snackbar.make(binding.root, R.string.error_obtaining_photo_url, Snackbar.LENGTH_SHORT).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(binding.root, R.string.error_uploading_photo, Snackbar.LENGTH_SHORT).show()
                         }
                     } else {
                         val newCustomer = Customer(
@@ -144,7 +154,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
                         db.collection("clientes").document(uid).set(newCustomer)
                     }
 
-                    setResult(Activity.RESULT_OK)
+                    val i = Intent()
+                    i.putExtra("form", form.toString())
+                    i.putExtra("name", "customer")
+                    setResult(Activity.RESULT_OK, i)
                     finish()
                 }
 
@@ -203,14 +216,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
 
                                 db.collection("clientes").document(uid).set(editCustomer)
                             }
-                        }.addOnFailureListener { exception ->
-                            Log.e(
-                                "Firebase Storage",
-                                "Error al obtener la URL de descarga",
-                                exception
-                            )
-                        }.addOnFailureListener { exception ->
-                            Log.e("Firebase Storage", "Error al subir la foto", exception)
+                        }.addOnFailureListener {
+                            Snackbar.make(binding.root, R.string.error_obtaining_photo_url, Snackbar.LENGTH_SHORT).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(binding.root, R.string.error_uploading_photo, Snackbar.LENGTH_SHORT).show()
                         }
                     } else {
                         val editCustomer = Customer(
@@ -229,7 +238,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
                         db.collection("clientes").document(uid).set(editCustomer)
                     }
 
-                    setResult(Activity.RESULT_OK)
+                    val i = Intent()
+                    i.putExtra("form", form.toString())
+                    i.putExtra("name", "customer")
+                    setResult(Activity.RESULT_OK, i)
                     finish()
                 }
             }
@@ -242,10 +254,10 @@ class AddEditCustomerActivity : AppCompatActivity() {
     }
 
     private fun chooseGalleryOrPhoto() {
-        val builder = AlertDialog.Builder(this)
+        val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle(R.string.select_image)
 
-        val options = arrayOf("Gallery", "Camera", "Quit Photo")
+        val options = arrayOf(getString(R.string.gallery), getString(R.string.camera), getString(R.string.quit_photo))
         builder.setItems(options) { _, which ->
             when (which) {
                 0 -> {

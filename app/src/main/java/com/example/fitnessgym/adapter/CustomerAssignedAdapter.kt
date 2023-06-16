@@ -19,8 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
-class CustomerAssignedAdapter(var customers: MutableList<Customer>,
-                      val deleteFromGroupButton: (String) -> Unit): RecyclerView.Adapter<CustomerAssignedAdapter.CustomerAssignedContainer>() {
+class CustomerAssignedAdapter(var customers: MutableList<Customer>): RecyclerView.Adapter<CustomerAssignedAdapter.CustomerAssignedContainer>() {
 
     inner class CustomerAssignedContainer(private val layout: CustomerAssignedLayoutBinding): RecyclerView.ViewHolder(layout.root) {
         @SuppressLint("SetTextI18n")
@@ -33,10 +32,6 @@ class CustomerAssignedAdapter(var customers: MutableList<Customer>,
                 }
 
                 name.text = "${customer.name} ${customer.surname}"
-
-                deleteFromGroupButton.setOnClickListener {
-                    deleteFromGroupButton(customer.docId)
-                }
             }
 
         }

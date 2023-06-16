@@ -27,7 +27,11 @@ class CustomerAdapter(var customers: MutableList<Customer>,
 
                 name.text = "${customer.name} ${customer.surname}"
                 email.text = customer.email
-                inscriptionDate.text = Dates.showProperDate(customer.inscription)
+
+                val inscriptionDateDate = Dates.showProperDate(customer.inscription)
+
+                inscriptionDate.text = root.context.getString(R.string.inscription_date, inscriptionDateDate)
+
 
                 root.setOnLongClickListener {
                     val menu = PopupMenu(root.context, name)

@@ -2,12 +2,15 @@ package com.example.fitnessgym.activities
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.fitnessgym.functions.ChangeLanguage
 import com.example.fitnessgym.functions.Dialogs
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityLoginBinding
@@ -15,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -26,6 +30,10 @@ class LoginActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sp: SharedPreferences = getSharedPreferences("com.pmdm.juego_CONFIGURACION", MODE_PRIVATE)
+
+        sp.getString("language", "es")?.let { ChangeLanguage.changeLanguage(it, this@LoginActivity) }
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
@@ -74,8 +82,10 @@ class LoginActivity : AppCompatActivity() {
                     .addOnSuccessListener {
 
                         val i = Intent(this@LoginActivity, MainActivity::class.java)
+                        i.putExtra("logged", "logged")
                         startActivity(i)
                         finish()
+
                     }
                     .addOnFailureListener {
                         Snackbar.make(root, R.string.login_exception, Snackbar.LENGTH_LONG).show()
@@ -105,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
             }
             RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()
+            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
         }
     }
 }

@@ -2,16 +2,18 @@ package com.example.fitnessgym.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.activities.ConfigActivity
 import com.example.fitnessgym.activities.EditProfileActivity
 import com.example.fitnessgym.activities.LoginActivity
+import com.example.fitnessgym.functions.Dates
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.FragmentProfileBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -21,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlin.properties.Delegates.observable
+
 
 class ProfileFragment : Fragment() {
 
@@ -42,11 +45,16 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.settings_menu, menu)
+
+        val icon = menu.findItem(R.id.settings_button)
+        icon.icon?.setColorFilter(resources.getColor(R.color.white), PorterDuff.Mode.SRC_IN)
+
         true
     }
 
@@ -114,7 +122,7 @@ class ProfileFragment : Fragment() {
                         val newPhotoUrl = snapshot.getString("photo") ?: ""
 
                         userCompleteName = "$newUserFirstName $newUserLastName"
-                        userBirthdate = newUserBirthdate
+                        userBirthdate = Dates.showProperDate(newUserBirthdate)
                         userEmail = newUserEmail
                         userPhone = newUserPhone
                         userDni = newUserDni
@@ -134,7 +142,7 @@ class ProfileFragment : Fragment() {
                                 db.collection("usuarios").document(uid).delete()
                             }
 
-                            Snackbar.make(root, "User deleted", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(root, R.string.user_successfully_deleted, Snackbar.LENGTH_LONG).show()
 
                             auth.currentUser?.delete()?.addOnSuccessListener {
                                 auth.signOut()
@@ -142,7 +150,7 @@ class ProfileFragment : Fragment() {
                                 startActivity(Intent(context, LoginActivity::class.java))
                                 return@addOnSuccessListener
                             }?.addOnFailureListener {
-                                Snackbar.make(root, "Something went wrong", Snackbar.LENGTH_LONG).show()
+                                Snackbar.make(root, R.string.error, Snackbar.LENGTH_LONG).show()
                             }
 
 
@@ -172,7 +180,7 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(binding.root, R.string.user_successfully_edited, Snackbar.LENGTH_LONG).show()
             }
             AppCompatActivity.RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()
+            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
         }
     }
 

@@ -1,14 +1,21 @@
 package com.example.fitnessgym.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.example.fitnessgym.entities.Customer
+import com.example.fitnessgym.functions.ChangeLanguage
 import com.example.fitnessgym.functions.Dates
 import com.fitness.fitnessgym.R
 import com.fitness.fitnessgym.databinding.ActivityCustomerViewBinding
@@ -17,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import java.util.*
 import kotlin.properties.Delegates
 import kotlin.properties.Delegates.observable
 
@@ -31,6 +39,8 @@ class CustomerViewActivity : AppCompatActivity() {
 
         binding = ActivityCustomerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Objects.requireNonNull(supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.red))))
 
         var customer = intent.extras?.get("customer") as Customer
 
@@ -172,7 +182,7 @@ class CustomerViewActivity : AppCompatActivity() {
                         }
 
                         // Mostrar un mensaje de éxito
-                        Snackbar.make(binding.root, "${customer.name} is no longer in the group", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(binding.root, getString(R.string.customer_removed, customer.name), Snackbar.LENGTH_LONG).show()
                     }
             }
 
@@ -183,39 +193,11 @@ class CustomerViewActivity : AppCompatActivity() {
             }
 
             deleteCustomerButtonEdg.setOnClickListener {
-                MaterialAlertDialogBuilder(this@CustomerViewActivity)
-                    .setTitle(R.string.delete_user)
-                    .setMessage(R.string.delete_customer_message)
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        db.collection("clientes").document(customer.docId).delete()
-
-                        val i = Intent()
-                        i.putExtra("form", "delete")
-                        setResult(RESULT_OK, i)
-                        finish()
-                    }
-                    .setNegativeButton(R.string.no) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+                deleteCustomer(customer.docId)
             }
 
             deleteCustomerButtonAdg.setOnClickListener {
-                MaterialAlertDialogBuilder(this@CustomerViewActivity)
-                    .setTitle(R.string.delete_user)
-                    .setMessage(R.string.delete_customer_message)
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        db.collection("clientes").document(customer.docId).delete()
-
-                        val i = Intent()
-                        i.putExtra("form", "delete")
-                        setResult(RESULT_OK, i)
-                        finish()
-                    }
-                    .setNegativeButton(R.string.no) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+                deleteCustomer(customer.docId)
             }
 
             viewBackButton.setOnClickListener {
@@ -224,6 +206,29 @@ class CustomerViewActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    private fun deleteCustomer(docId: String) {
+        MaterialAlertDialogBuilder(this@CustomerViewActivity)
+            .setTitle(R.string.delete_user)
+            .setMessage(R.string.delete_customer_message)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                db.collection("clientes").document(docId).delete()
+
+                val i = Intent()
+                i.putExtra("form", "delete")
+                setResult(RESULT_OK, i)
+                finish()
+            }
+            .setNegativeButton(R.string.no) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+
+
+
 
     /**
      * @param data: ActivityResult
@@ -246,14 +251,14 @@ class CustomerViewActivity : AppCompatActivity() {
                         changeGroupButton.visibility = View.VISIBLE
                     }
 
-                    Snackbar.make(binding.root, "User is now in $groupName", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, getString(R.string.customer_in_a_group), Snackbar.LENGTH_LONG).show()
                 } else {
                     Snackbar.make(binding.root, R.string.customer_successfully_edited, Snackbar.LENGTH_LONG).show()
                 }
 
             }
             RESULT_CANCELED -> {}
-            else            -> Snackbar.make(binding.root, "canceled", Snackbar.LENGTH_LONG).show()
+            else            -> Snackbar.make(binding.root, R.string.cancel, Snackbar.LENGTH_LONG).show()
         }
     }
 }
