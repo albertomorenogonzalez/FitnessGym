@@ -131,6 +131,8 @@ En la pestaña de perfil, a la que podremos acceder tanto desde su entrada en el
 
 En la pestaña de opciones podremos cambiar el idioma de nuestra aplicación. Al confirmar, apareceremos de nuevo en la pestaña de inicio con el idioma de la aplicación completa cambiado.
 
+## [Presentación](https://github.com/albertomorenogonzalez/FitnessGym/blob/main/Presentacion.pdf)
+
 ## [Trello](https://trello.com/b/bwXyty7u/fitnessgym)
 Este proyecto utiliza Trello para la gestión de las tareas a realizar 
 
