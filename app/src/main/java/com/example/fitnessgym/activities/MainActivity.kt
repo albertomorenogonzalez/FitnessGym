@@ -150,7 +150,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 is GroupsFragment -> supportActionBar?.setTitle(R.string.groups)
                 is CustomersFragment -> supportActionBar?.setTitle(R.string.customers)
                 is InstructorsFragment -> supportActionBar?.setTitle(R.string.instructors)
-                is AboutFragment -> supportActionBar?.setTitle(R.string.about)
             }
         }
 
@@ -203,12 +202,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_instructors -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, InstructorsFragment())
-                    .addToBackStack(null)
-                    .commit()
-            }
-            R.id.nav_about -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, AboutFragment())
                     .addToBackStack(null)
                     .commit()
             }
