@@ -180,7 +180,7 @@ Al entrar en el ProfileFragment se pueden ver todos los datos del usuario activo
 El problema con las imágenes de galería en la RegisterActivity aún no está solucionado, pero en EditProfileActivity no hay ningún problema.
 
 
-- [16/06/2023](https://github.com/albertomorenogonzalez/FitnessGym/commit/e7d51a451573292125812f7518ff2774ff165070)
+- [Application Functionality Completed - 16/06/2023](https://github.com/albertomorenogonzalez/FitnessGym/commit/e7d51a451573292125812f7518ff2774ff165070)
 
 Aplicación compleatada. Todas las vistas se muestran, navegación entre las distintas partes de la aplicación óptima. CRUDs completados. Cambio de lenguage de la aplicación funcional. No ha sido posible implementar el cambio de tema y por eso se muestra un texto que indica que aún no se puede
 
