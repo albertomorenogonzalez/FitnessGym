@@ -117,13 +117,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 username.text = newUserName
             }
             var photoUrl: String by observable("") { _, _, newPhotoUrl ->
-                val firebasePhotoStart = "https://firebasestorage.googleapis.com/v0/b/fitness-gym-80s.appspot.com/o/fitnessgym-images"
-                if (firebasePhotoStart in newPhotoUrl) {
-                    // Load the user's profile picture using Glide
-                    Glide.with(binding.root).load(newPhotoUrl).into(profilePick)
-                } else {
-                    // Set a default profile picture if the URL is not valid
-                    profilePick.setImageResource(R.drawable.fitness_gym_logo)
+                if (!isDestroyed) {
+                    val firebasePhotoStart =
+                        "https://firebasestorage.googleapis.com/v0/b/fitness-gym-80s.appspot.com/o/fitnessgym-images"
+                    if (firebasePhotoStart in newPhotoUrl) {
+                        // Load the user's profile picture using Glide
+                        Glide.with(binding.root).load(newPhotoUrl).into(profilePick)
+                    } else {
+                        // Set a default profile picture if the URL is not valid
+                        profilePick.setImageResource(R.drawable.fitness_gym_logo)
+                    }
                 }
             }
 
