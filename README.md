@@ -123,23 +123,13 @@ Nos aparece la actividad principal, desde donde podremos navegar a las distintas
 
 En la pestaña de clientes podremos añadir un nuevo cliente, editarlo, ver sus datos, eliminarlo, asignarlo a un grupo, cambiarlo de grupo o quitarlo de un grupo.
 
-
-
 En la pestaña de grupos podremos añadir un nuevo grupo, ver todos sus datos, editarlo, eliminar y ver los clientes pertenecientes a ese grupo.
-
-
 
 En la pestaña de instructores podremos ver los instructores, monitores y empleados y ver sus datos.
 
-
-
 En la pestaña de perfil, a la que podremos acceder tanto desde su entrada en el side menu como clickando en nuestra foto de perfil, y ahi podremos ver nuestros datos, editarlos, eliminar nuestro usuario e ir a opciones.
 
-
-
 En la pestaña de opciones podremos cambiar el idioma de nuestra aplicación. Al confirmar, apareceremos de nuevo en la pestaña de inicio con el idioma de la aplicación completa cambiado.
-
-
 
 ## [Trello](https://trello.com/b/bwXyty7u/fitnessgym)
 Este proyecto utiliza Trello para la gestión de las tareas a realizar 
@@ -148,7 +138,7 @@ Este proyecto utiliza Trello para la gestión de las tareas a realizar
 
 ## [Vídeo Checkout 05/05/2023](https://www.youtube.com/watch?v=go-7G-VvBFE)
 
-## [Vídeo de la Aplicación final - 16/06/2023]()
+## [Vídeo de la Aplicación final - 16/06/2023](https://www.youtube.com/watch?v=HKwuIjwBsKQ)
 
 ## Histórico del Proyecto (por commits principales)
 
