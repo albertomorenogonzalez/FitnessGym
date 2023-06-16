@@ -116,12 +116,30 @@ Démosle primero al botón de Registrarse. Al completar el registro en el que el
 Nos aparece la actividad principal, desde donde podremos navegar a las distintas partes de la aplicación. En este momento podemos desplegar el side menu o hacer una pulsación larga para ver más opciones:
 
 <p align="center">
- <img src="http://drive.google.com/uc?export=view&id=1eGp-Aubq0tVxLcQ8lsN_4-eW5Sxs2FA" width="40%">
- <img src="http://drive.google.com/uc?export=view&id=1DrJWciYu6av8PHYRqk4Jnx8TcC1rOYX5" width="40%">
- <img src="http://drive.google.com/uc?export=view&id=1xYpNQIaG-Iz5zQM5IpqZXEUZZfOIfQbX" width="40%">
+ <img src="http://drive.google.com/uc?export=view&id=1eGp-Aubq0tVxLcQ8lsN_4-eW5Sxs2FAv" width="30%">
+ <img src="http://drive.google.com/uc?export=view&id=1DrJWciYu6av8PHYRqk4Jnx8TcC1rOYX5" width="30%">
+ <img src="http://drive.google.com/uc?export=view&id=1xYpNQIaG-Iz5zQM5IpqZXEUZZfOIfQbX" width="30%">
 </p>
 
-En la pestaña de clientes
+En la pestaña de clientes podremos añadir un nuevo cliente, editarlo, ver sus datos, eliminarlo, asignarlo a un grupo, cambiarlo de grupo o quitarlo de un grupo.
+
+
+
+En la pestaña de grupos podremos añadir un nuevo grupo, ver todos sus datos, editarlo, eliminar y ver los clientes pertenecientes a ese grupo.
+
+
+
+En la pestaña de instructores podremos ver los instructores, monitores y empleados y ver sus datos.
+
+
+
+En la pestaña de perfil, a la que podremos acceder tanto desde su entrada en el side menu como clickando en nuestra foto de perfil, y ahi podremos ver nuestros datos, editarlos, eliminar nuestro usuario e ir a opciones.
+
+
+
+En la pestaña de opciones podremos cambiar el idioma de nuestra aplicación. Al confirmar, apareceremos de nuevo en la pestaña de inicio con el idioma de la aplicación completa cambiado.
+
+
 
 ## [Trello](https://trello.com/b/bwXyty7u/fitnessgym)
 Este proyecto utiliza Trello para la gestión de las tareas a realizar 
@@ -129,6 +147,8 @@ Este proyecto utiliza Trello para la gestión de las tareas a realizar
 ## [Anteproyecto en Figma](https://www.figma.com/file/kvU6qBh4NmjaGoooBiBPvJ/Anteproyecto-Fitness-Gym?node-id=0%3A1&t=e7FTqe0I8Yq6Mbhf-1)
 
 ## [Vídeo Checkout 05/05/2023](https://www.youtube.com/watch?v=go-7G-VvBFE)
+
+## [Vídeo de la Aplicación final - 16/06/2023]()
 
 ## Histórico del Proyecto (por commits principales)
 
