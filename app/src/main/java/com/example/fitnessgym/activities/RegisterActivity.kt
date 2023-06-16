@@ -154,7 +154,7 @@ class RegisterActivity : AppCompatActivity() {
                                                         uid,
                                                         name,
                                                         surname,
-                                                        birthdate,
+                                                        Dates.formatDate(birthdate),
                                                         email,
                                                         telephoneNumber,
                                                         dni,
@@ -182,7 +182,7 @@ class RegisterActivity : AppCompatActivity() {
                                                 uid,
                                                 name,
                                                 surname,
-                                                birthdate,
+                                                Dates.formatDate(birthdate),
                                                 email,
                                                 telephoneNumber,
                                                 dni
