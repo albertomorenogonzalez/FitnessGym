@@ -1,7 +1,7 @@
 # FitnessGym
 
 <p align="center">
- <img src="http://drive.google.com/uc?export=view&id=1U_3kmoIH0hH12VUwncm5gtksl0WUlnuu">
+ <img src="http://drive.google.com/uc?export=view&id=1z4ASt_DywpE8ZdOw1pL5ddVmi1d9Syxh">
 </p>
  
 Desarrollado por Jose Antonio Benitez (Hibrido) y Alberto Moreno (Nativo)
@@ -9,22 +9,122 @@ Desarrollado por Jose Antonio Benitez (Hibrido) y Alberto Moreno (Nativo)
 ## Objetivo del Proyecto
 El objetivo del proyecto es crear una aplicación para un gimnasio que agilice y facilite la gestión del mismo.
 
+## [APK](https://github.com/albertomorenogonzalez/FitnessGym/blob/main/app-debug.apk)
+
 ## Base de datos
-La base de datos utilizada por ambas aplicaciones será Firebase.
+La base de datos será en Firebase y se utilizará en ambas aplicaciones. Un empleado puede estar en muchos grupos, pero un grupo solo puede tener un empleado. Un grupo puede tener muchos clientes y un cliente puede estar en un grupo.
+
+La aplicación consta de 3 modelos:
+
+### Modelo "clientes"
+- Nombre
+- Apellidos
+- Email
+- Fecha de nacimiento
+- Código postal
+- Número de teléfono
+- DNI/NIE
+- Foto de perfil
+- Inscripción
+
+### Modelo "grupos"
+- Nombre
+- Descripción
+- Foto
+
+### Modelo "empleado_gym" (usuario y monitor)
+- Nombre
+- Apellidos
+- Fecha de nacimiento
+- Email
+- Contraseña
+- Número de teléfono
+- DNI/NIE
+- Foto de perfil
+
+Al cargo de cada grupo está un monitor, que es un empleado del gimnasio. Un empleado puede tener muchos grupos a su cargo, pero un grupo solo puede tener un empleado al frente.
 
 ## Modelo Relacional
-![](http://drive.google.com/uc?export=view&id=1eG7NFQKbKK497GwGSbLkR8WeHlwjl3FI)
+![](http://drive.google.com/uc?export=view&id=1eh7wx4V_9hpIglzhcW6GDkvTwc0yYqxg) 
 
-La aplicación consta de 3 modelos. El modelo usuarios refiere a los clientes del gimnasio (usuarios_gym). De estos se necesita su nombre, apellidos, email, fecha de nacimiento, código postal, número de teléfono, DNI/NIE, una foto de perfil y la duración de su suscripción. Luego tenemos la entidad grupos, que refiere a los clases y actividades que se imparten en el gimnasio. Necesitan nombre, descripción y foto. Un usuario puede estar en muchos grupos y un grupo tiene muchos usuarios. Al cargo de cada grupo esta un monitor, que es un empleado del gimnasio (empleado_gym). De estos se necesita su nombre, apellidos, nombre de usuario, fecha de nacimiento, email, contraseña, numero de telefono, DNI/NIE y foto de perfil. Un empleado puede tener muchos grupos a su cargo pero un grupo solo puede un empleado al frente. 
-
-## Requisitos Específicos del Módulo Sistemas de Gestión Empresiaral (SGE)
+## Requisitos Específicos del Módulo Sistemas de Gestión Empresarial (SGE)
 Para esta asignatura procederemos a descargar los datos de los clientes (CSV o JSON), manipularlos con Pandas y crear un nuevo fichero que le sirva de entrada a PowerBI.
+
+Para poder crear un archivo que realizase esta tarea, hemos necesitadoprocesar los datos del archivo backup.json que contiene la información exportada de la base de datos
+alojada en Firebase que utiliza nuestra aplicación FitnessGym. Para poder exportar estos datos hemos generado una clave privada
+de Firebase a la que hemos llamado key.json y la hemos alojado en esta carpeta. Usando el comando 
+    'firestore-export --accountCredentials key.json --backupFile backup.json --prettyPrint'
+de node-firestore-import-export en la consola es como generamos el archivo backup.json para poder tratarlo aquí y generar un archivo csv
+para poder generar un informe en PowerBI.
+
+[Ver el archivo](pandas+powerbi/csv_converter.py)
 
 ## Requisitos Específicos del Módulo Desarrollo de Interfaces
 Para la asignatura de diseño de interfaces crearemos un informe a partir de esos datos en el que mostraremos gráficas como rangos de edad, grupos más/menos solicitados, monitores que están a cargo de más/menos grupos. Se subirá al repositorio del proyecto y también se publicará en Power BI, compartiéndolo con la dirección de correo educativa del profesor.
 
+![](https://github.com/jbenrui/fitness-gym/blob/master/Imagenes/PBI.png)
+
+## Manual de Instalación y Dependencias
+### 1. Introducción
+En este apartado del README se explicará todo aquello necesario para instalar la aplicación y que su uso sea óptimo. 
+### 2. Requisitos Previos
+Esta aplicación ha sido creada en Android Studio 2021.3.1, usando la versión 1.8 de Java, en el sistema operativo Windows y enfocada a la API 33 de Android. La versión mínima que soporta es la API 26. La aplicación está escrita en Kotlin y utiliza XML para las vistas. Para la base de datos se utiliza Firebase como ya se ha mencionado anteriormente.
+### 3. Instalación
+Si quieres únicamente usar la aplicación será mediante la descarga del [APK](https://github.com/albertomorenogonzalez/FitnessGym/blob/main/app-debug.apk) 
+Si quieres colaborar y trabajar sobre ella solo tienes que clonar tu repositorio con git clone y asegurarte de que tienes los requisitos comentados previamente. Recomendación personal para probar la aplicación usar tu dispositivo físico. Para ello solo necesitas conectar tu teléfono en modo desarrollador y con la opción de depuración USB activadad en el ordenador donde estés programando 
+### 4. Dependencias Utilizadas
+implementation 'androidx.core:core-ktx:1.7.0'
+- androidx.appcompat:appcompat:1.6.1
+- com.google.android.material:material:1.8.0
+- androidx.constraintlayout:constraintlayout:2.1.4
+- junit:junit:4.13.2
+- androidx.test.ext:junit:1.1.5
+- androidx.test.espresso:espresso-core:3.5.1
+- platform('com.google.firebase:firebase-bom:31.3.0')
+- com.google.firebase:firebase-auth-ktx:22.0.0
+- com.google.firebase:firebase-firestore-ktx:24.6.1
+- com.google.firebase:firebase-analytics-ktx
+- com.google.firebase:firebase-storage-ktx:20.2.0
+- de.hdodenhof:circleimageview:3.1.0
+- com.github.bumptech.glide:glide:4.15.0
+- com.github.bumptech.glide:compiler:4.15.0
+### 5. Otras Recomendaciones Personales
+- Asignar en  buildFeatures viewBindign a true en el archivo build.gradle (app)
+- Preguntar cualquier duda a través de este repositorio o a través de mi correo albertomorenogonzalez03@gmail.com
+
+## Tutorial de Uso de la Aplicación
+
+Este es icono de la aplicación en el teléfono.
+
+<p align="center">
+ <img src="http://drive.google.com/uc?export=view&id=1NkJtW-BiciO2XjVbceO4QqXtBpn53-Y6" width="40%">
+</p>
+
+Al clickar nos aparecerá lo siguiente:
+
+<p align="center">
+ <img src="http://drive.google.com/uc?export=view&id=15XoHJChh6kBcsG9RDVwHjNpEnCjo1Lpi" width="40%">
+</p>
+
+Démosle primero al botón de Registrarse. Al completar el registro en el que el único campo no obligatorio es la foto, volveremos a la actividad del login pero con nuestros datos en los campos de entrada. Solo tendremos que darle a "Iniciar"
+
+<p align="center">
+ <img src="http://drive.google.com/uc?export=view&id=1PBpMaM95_4h2d7mv-X9-xi4PtexIIFDS" width="40%">
+ <img src="http://drive.google.com/uc?export=view&id=1lK8EQCuoqCMlhZHww1iDLVkSTXUhCQG3" width="40%">
+</p>
+
+Nos aparece la actividad principal, desde donde podremos navegar a las distintas partes de la aplicación. En este momento podemos desplegar el side menu o hacer una pulsación larga para ver más opciones:
+
+<p align="center">
+ <img src="http://drive.google.com/uc?export=view&id=1eGp-Aubq0tVxLcQ8lsN_4-eW5Sxs2FA" width="40%">
+ <img src="http://drive.google.com/uc?export=view&id=1DrJWciYu6av8PHYRqk4Jnx8TcC1rOYX5" width="40%">
+ <img src="http://drive.google.com/uc?export=view&id=1xYpNQIaG-Iz5zQM5IpqZXEUZZfOIfQbX" width="40%">
+</p>
+
+En la pestaña de clientes
+
 ## [Trello](https://trello.com/b/bwXyty7u/fitnessgym)
-Este proyecto utiliza Trello para la gestión de las tareas a realizar
+Este proyecto utiliza Trello para la gestión de las tareas a realizar 
 
 ## [Anteproyecto en Figma](https://www.figma.com/file/kvU6qBh4NmjaGoooBiBPvJ/Anteproyecto-Fitness-Gym?node-id=0%3A1&t=e7FTqe0I8Yq6Mbhf-1)
 
